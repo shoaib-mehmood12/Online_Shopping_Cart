@@ -1,0 +1,7 @@
+﻿.cat_menu{
+    display: none;
+}
+
+.cat_menu_title:hover .cat_menu{
+    display: block;
+}

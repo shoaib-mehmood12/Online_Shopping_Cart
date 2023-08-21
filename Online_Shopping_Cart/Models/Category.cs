@@ -1,0 +1,38 @@
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace Online_Shopping_Cart.Models
+{
+    public class Category:SharedModel
+    {
+        [Required(ErrorMessage = "Name is required")]
+        [StringLength(50)]
+        public string Name { get; set; }//name of the category-->>e.g samsung    
+
+        [Required(ErrorMessage = "Description Required")]
+        [StringLength(100)]
+        public string Description { get; set; }//description of the category
+
+        public int Rank { get; set; }//rank allot to the category
+
+        //public CategoryStatus Status { get; set; }// the status of the category is alloted from the enum (active or not)
+        [Required(ErrorMessage = "Image url is required")]
+        public string ImageUrl { get; set; }//this will use in the view where we will be add the images of the product.
+        [Required]
+        public string LogoUrl { get; set; }//this will use in the view where we will be add the logo of the product.
+
+        //one(category) have many(product)
+
+        [InverseProperty("Brand")]
+        public virtual List<Product> BrandWiseProducts { get; set; }//one category have more than on products 1(category)--many(products) thats why we added the list of the products in the category[e.g]--> samsung is a category and is have more than one product.
+        [InverseProperty("Category")]
+        public virtual List<Product> CategoryWiseProducts { get; set; }//one category have more than on products 1(category)--many(products) thats why we added the list of the products in the category[e.g]--> samsung is a category and is have more than one product.
+    }
+    public enum CategoryType{
+        Category = 0,
+        Brand = 1,
+        Blogs = 2
+
+    }
+}
+
