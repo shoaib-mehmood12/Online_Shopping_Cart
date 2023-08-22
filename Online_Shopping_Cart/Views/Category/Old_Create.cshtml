@@ -1,0 +1,14 @@
+﻿@model Category     //strongly type view--->means through the word model i'll get the the attribute values of Category Model
+
+<form method="post">
+    <input asp-for="Name" />
+    <span class="text-danger" asp-validation-for="Name"></span>
+    <br />
+    <br />
+    <input asp-for="Description" />
+    <span class="text-danger" asp-validation-for="Description"></span>
+    <br />
+    <br />
+    <input type="submit" />
+
+</form>
