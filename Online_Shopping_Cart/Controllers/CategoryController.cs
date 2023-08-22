@@ -22,7 +22,7 @@ namespace Online_Shopping_Cart.Controllers
                 var x = 01;
             }
             // ModelState.AddModelError("Name", "Custom error");
-            return View(model) ;
+            return View(model);
         }
         public IActionResult Edit()
         {
