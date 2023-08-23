@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Online_Shopping_Cart.Data;
 using Online_Shopping_Cart.Models;
@@ -51,19 +52,34 @@ namespace Online_Shopping_Cart.Controllers
         {
             if (ModelState.IsValid)
             {
-                _context.Update(model);
-                _context.SaveChanges();
+                _context.Update(model);//update the changes that we have done in the above get method of the Edit
+                _context.SaveChanges();//save the changes in the database
                 return RedirectToAction(nameof(Index));
             }
            
-
             return View(model);
 
         }
-        public IActionResult Delete()
+        public IActionResult Delete(string id)
         {
-            return View();
+            var category = _context.Catogories.Find(id);
+            if (category == null) return NotFound();
+
+            return View(category);
+
         }
+        [HttpPost]
+        [ActionName("Delete")]
+        public IActionResult DeleteConfirm(string id)
+        {
+            var category = _context.Catogories.Find(id);
+            if(category == null) return NotFound();
+            _context.Catogories.Remove(category);
+            _context.SaveChanges();
+            return RedirectToAction(nameof(Index));
+        }
+
+        
 
     }
 }
