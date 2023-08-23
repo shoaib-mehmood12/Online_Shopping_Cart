@@ -21,8 +21,9 @@ namespace Online_Shopping_Cart.Models
         [Required]
         public string LogoUrl { get; set; }//this will use in the view where we will be add the logo of the product.
 
-        //one(category) have many(product)
+        public bool status { get; set; }
 
+        //one(category) have many(product)
         [InverseProperty("Brand")]
         public virtual List<Product> BrandWiseProducts { get; set; }//one category have more than on products 1(category)--many(products) thats why we added the list of the products in the category[e.g]--> samsung is a category and is have more than one product.
         [InverseProperty("Category")]

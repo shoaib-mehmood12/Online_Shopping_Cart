@@ -42,5 +42,17 @@ namespace Online_Shopping_Cart.Models
 
         //navigate that user purchase the product after carting
         public virtual List<OrderDetail> OrderDetails { get; set; }//it means that many(ProductDisplaySelection)->many(product) so for this we have the list in both in one another
+        public virtual List<ProductImage> Images { get; set; }
+
+    
+    }
+    public class ProductImage : SharedModel
+    {
+        [ForeignKey("Product")]
+        public string  ProductId { get; set; }
+        public Product Product { get; set; }
+        public string URL { get; set; }
+        public int Rank { get; set; }
+
     }
 }

@@ -14,7 +14,9 @@ namespace Online_Shopping_Cart.Data
             : base(options)
         {
         }
-
+        //the mapping of the database relations and the objects in known as the enttiy framework. 
+        //in database we have the realtional data and we call it the object relational database
+        // These objects are the tables name that the database contains for the project (ORM object relational Modeling)
         public DbSet<AppUser> Users { get; set; }
         public DbSet<AppRole> Roles { get; set; }
         public DbSet<CartItem> CartItems { get; set; }
@@ -23,6 +25,7 @@ namespace Online_Shopping_Cart.Data
         public DbSet<Order> Orders { get; set; }
         public DbSet<OrderDetail> OrderDetails { get; set; }
         public DbSet<ShoppingCart> Carts { get; set; }
+        public DbSet<ProductImage> ProductImages { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
