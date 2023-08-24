@@ -1,7 +1,7 @@
-﻿.cat_menu{
-    display: none;
+﻿.cat_menu {
+    visibility: hidden;
 }
 
-.cat_menu_title:hover .cat_menu{
-    display: block;
+.cat_menu_container:hover .cat_menu{
+    visibility: visible;
 }

@@ -9,5 +9,7 @@ namespace Online_Shopping_Cart.Models
         public string Name { get; set; }
 
         public List<AppUser> User { get; set; }
+
+   
     }
 }

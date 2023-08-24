@@ -18,8 +18,8 @@ namespace Online_Shopping_Cart.Controllers
         {
             if (ModelState.IsValid)
             {
-                var x= 01;
-            }
+                
+    }
             return View(model);
         }
     }
