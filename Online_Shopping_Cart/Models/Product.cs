@@ -5,6 +5,11 @@ namespace Online_Shopping_Cart.Models
 {
     public class Product:SharedModel
     {
+        //ref: line#57 product controller
+        public Product()
+        {
+            Images = new();
+        }
         [Required(ErrorMessage = "The slug field is required ")]
         [StringLength(150)]
         [RegularExpression("^[a-z0-9-]{1,150}$", ErrorMessage = "The slug must have lower case Alpha-Numeric")]
@@ -33,7 +38,7 @@ namespace Online_Shopping_Cart.Models
         [Required(ErrorMessage = "The release date is required")]
         public DateTime? ReleaseDate { get; set; }//when the product is release and ? mean it may be nullable(assign a null value to a variable if user not enter the value).
 
-        //[Required(ErrorMessage = "The category field is required")]
+        [Required(ErrorMessage = "The category field is required")]
         [ForeignKey("Category")]
         public string CategoryId { get; set; }//foreign-key of the category class becuse 1(category)->many(products) && many(products)->one(category) so by this forign key we will tell that from which category the product exist.
         public virtual Category Category { get; set; }//creating the object of the category 
@@ -42,8 +47,10 @@ namespace Online_Shopping_Cart.Models
 
         //navigate that user purchase the product after carting
         public virtual List<OrderDetail> OrderDetails { get; set; }//it means that many(ProductDisplaySelection)->many(product) so for this we have the list in both in one another
-        public virtual List<ProductImage> Images { get; set; }
-
+        public virtual List<ProductImage> Images { get; set; }// for database
+        [NotMapped]
+        public List<IFormFile> Uploads { get; set; }
+        
     
     }
     public class ProductImage : SharedModel

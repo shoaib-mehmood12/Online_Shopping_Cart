@@ -2,8 +2,15 @@
 
 @{
     ViewData["Title"] = "Create";
-    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+
 } 
+  @* ref: line# 24 Product create *@
+@if (TempData["notification"] != null)
+{
+    <p class="text-danger">
+        @TempData["notification"]
+    </p>
+}
 <div class="row">
     <div class="col-md-6">
         <div class="card">
@@ -12,7 +19,7 @@
                 <p class="card-description">
                     Setup Section
                 </p>
-                <form asp-action="Create">
+                <form asp-action="Create" enctype="multipart/form-data">
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                     <div class="form-group">
                         <label asp-for="Name" class="control-label"></label>
@@ -29,23 +36,38 @@
                         <input asp-for="Rank" class="form-control" />
                         <span asp-validation-for="Rank" class="text-danger"></span>
                     </div>
-                    <div class="form-group">
+@*                     <div class="form-group
                         <label asp-for="ImageUrl" class="control-label"></label>
                         <input asp-for="ImageUrl" class="form-control" />
                         <span asp-validation-for="ImageUrl" class="text-danger"></span>
+                    </div> *@
+                    <div class="form-group">
+                        <label asp-for="Logo" class="control-label"></label>
+                        <input asp-for="Logo" type="file"  class="form-control" />
+                        <span asp-validation-for="Logo"  class="text-danger"></span>
                     </div>
                     <div class="form-group">
-                        <label asp-for="LogoUrl" class="control-label"></label>
-                        <input asp-for="LogoUrl" class="form-control" />
-                        <span asp-validation-for="LogoUrl" class="text-danger"></span>
+                        <label asp-for="Type" class="control-label"></label>
+                        <select asp-for="Type" class="form-control" >
+                           @*  there is the below method for drop down list of enum but we don't use this because by increaing in the category type we also have to increase the the update the code respectively. 
+                               <option value="Categories"> For Categories</option>
+                            <option value="Brands">For Brands</option>
+                            <option value="Blogs">For Blogs</option> *@
+                            @foreach (CategoryType item in Enum.GetValues(typeof(CategoryType)))
+                            {
+                                 <option value="@item.ToString()">@item.ToString()</option>
+                            }
+                        </select>
+                        <span asp-validation-for="Type" class="text-danger"></span>
                     </div>
+
                     <div class="form-group form-check">
                         <label class="form-check-label">
-                            <input class="form-check-input" asp-for="status" /> @Html.DisplayNameFor(model => model.status)
+                            <input class="form-check-input" asp-for="Status" /> @Html.DisplayNameFor(model => model.Status)
                         </label>
                     </div>
                     <div class="form-group">
-                        <input type="submit" value="Create" class="btn btn-primary" />
+                        <input type="submit" value="Create" class="btn btn-primary"  />
                     </div>
                 </form>
             </div>

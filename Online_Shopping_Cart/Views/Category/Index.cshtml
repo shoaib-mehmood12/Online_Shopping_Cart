@@ -3,6 +3,9 @@
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    string msg = TempData["Notification"]?.ToString();
+    string del = TempData["Delete"]?.ToString();
+    string edit = TempData["Edit"]?.ToString();
 }
 
 
@@ -10,11 +13,13 @@
     <div class="col-md-12">
         <div class="card">
             <div class="card-body">
-                <h4 class="card-title"> Details of Categories</h4>
+                <h4 class="card-title"> Details of Categories
+                    <a asp-action="Create" class="btn btn-info btn-sm float-right font-weight-bold "><i class="fa fa-plus"></i> Create New</a>
+                </h4>
                 <p class="card-description">
-                    <a asp-action="Create">Create New</a>
+                    Category Index
                 </p>
-            
+
                 <table class="table">
                     <thead>
                         <tr>
@@ -25,23 +30,30 @@
                                 @Html.DisplayNameFor(model => model.Description)
                             </th>
                             <th>
+                                @Html.DisplayNameFor(model => model.Type)
+                            </th>
+
+                            <th>
                                 @Html.DisplayNameFor(model => model.Rank)
                             </th>
+
+
                             <th>
-                                @Html.DisplayNameFor(model => model.ImageUrl)
+                                @Html.DisplayNameFor(model => model.Status)
                             </th>
+
                             <th>
-                                @Html.DisplayNameFor(model => model.LogoUrl)
+                                @Html.DisplayNameFor(model => model.Logo)
                             </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.status)
-                            </th>
+
                             <th></th>
                         </tr>
                     </thead>
                     <tbody>
+                        
                         @foreach (var item in Model)
                         {
+
                             <tr>
                                 <td>
                                     @Html.DisplayFor(modelItem => item.Name)
@@ -50,21 +62,27 @@
                                     @Html.DisplayFor(modelItem => item.Description)
                                 </td>
                                 <td>
+                                    @Html.DisplayFor(modelItem => item.Type)
+                                </td>
+
+                                <td>
                                     @Html.DisplayFor(modelItem => item.Rank)
                                 </td>
+
+
                                 <td>
-                                    @Html.DisplayFor(modelItem => item.ImageUrl)
+                                    @Html.DisplayFor(modelItem => item.Status)
                                 </td>
+
                                 <td>
-                                    @Html.DisplayFor(modelItem => item.LogoUrl)
+                               <img src="/@item.LogoUrl"  /> 
+                                    
                                 </td>
+
                                 <td>
-                                    @Html.DisplayFor(modelItem => item.status)
-                                </td>
-                                <td>
-                                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                                    <a asp-action="Edit" asp-route-id="@item.Id"class="fa fa-edit"></a> |
+                                    <a asp-action="Details" asp-route-id="@item.Id" class="fa fa-eye text-success"></a> |
+                                    <a asp-action="Delete" asp-route-id="@item.Id" class="fa fa-trash text-danger"></a>
                                 </td>
                             </tr>
                         }
@@ -73,4 +91,53 @@
             </div>
         </div>
     </div>
-    </div>
+</div>
+
+@* Create category notification  *@
+@if (TempData["Notification"] != null)
+{
+    @section js{
+
+    <script>
+        Swal.fire({
+            position: 'center',
+            icon: 'success',
+            title: '@msg created',
+            showConfirmButton: false,
+            timer: 1500
+        })
+    </script>
+    }
+}
+@* Delete category notification *@
+@if (TempData["Delete"] != null)
+{
+    @section js{
+
+    <script>
+        Swal.fire({
+            position: 'center',
+            icon: 'success',
+            title: '@del',
+            showConfirmButton: false,
+            timer: 1500
+        })
+    </script>
+    }
+}
+@if (TempData["Edit"] != null)
+{
+    @section js{
+
+    <script>
+        Swal.fire({
+            position: 'center',
+            icon: 'success',
+            title: '@edit Updated' ,
+            showConfirmButton: false,
+            timer: 1500
+        })
+    </script>
+    }
+}
+

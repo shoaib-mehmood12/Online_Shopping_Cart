@@ -134,16 +134,12 @@ namespace Online_Shopping_Cart.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
-                    b.Property<string>("ImageUrl")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<DateTime>("LastModified")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("LogoUrl")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -153,12 +149,15 @@ namespace Online_Shopping_Cart.Migrations
                     b.Property<int>("Rank")
                         .HasColumnType("int");
 
-                    b.Property<bool>("status")
+                    b.Property<bool>("Status")
                         .HasColumnType("bit");
+
+                    b.Property<int>("Type")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Catogories");
+                    b.ToTable("Categories");
                 });
 
             modelBuilder.Entity("Online_Shopping_Cart.Models.Order", b =>
@@ -234,6 +233,7 @@ namespace Online_Shopping_Cart.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("CategoryId")
+                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime>("DbEntryTime")
@@ -392,7 +392,9 @@ namespace Online_Shopping_Cart.Migrations
 
                     b.HasOne("Online_Shopping_Cart.Models.Category", "Category")
                         .WithMany("CategoryWiseProducts")
-                        .HasForeignKey("CategoryId");
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Brand");
 

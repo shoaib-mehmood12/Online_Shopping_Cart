@@ -21,4 +21,8 @@
     <Folder Include="wwwroot\themes\pullux-admin\css\vertical-layout-light\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Include="wwwroot\js\notify.js" />
+  </ItemGroup>
+
 </Project>

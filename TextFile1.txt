@@ -1,0 +1,11 @@
+1. TempData: this is the temprary storage that is use to display the data only once when our request complete the data will dispose automatically.
+2. ViewBag : move the data form the action to view and view to layout page,but there is conditoin that it will works inside the same controller.
+              action -> view && view-> layout Page 
+3. Any() is Nullable boolean
+4. ?? means that if the model is null then it's left side data and if not null then right side data // ref: used in the product model line#
+5.Directory.CreateDirectory(directryPath); ---> create the directory if not exists.
+6. ctrl+rr ----> this is use to change at one place will occur at the all other places where the same name or word used
+7. include only the navigation properties(list,objects) not the primitive dataTypes   
+8. View Model:
+            -> this is a concept in this we use select instead of include to get the specific coloums.
+            -> the product view model will not be added in the data base.

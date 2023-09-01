@@ -21,6 +21,10 @@
     <link rel="stylesheet" href="css/vertical-layout-light/style.css">
     <!-- endinject -->
     <link rel="shortcut icon" href="images/favicon.png" />
+    <link href="css/style.css" rel="stylesheet" />
+    <link href="~/themes/onetech-client/plugins/fontawesome-free-5.0.1/css/fontawesome-all.css" rel="stylesheet" />
+  @*   <link href="~/source/repos/online_shopping_cart/online_shopping_cartviews/shared/notifypartial.cshtml" /> *@
+    @* <link href="https://cdnjs.cloudflare.com/ajax/libs/notify/0.4.2/notify.js" />//cdn of the notify.js *@
 </head>
 <body>
     @*  <div class="row" id="proBanner">
@@ -206,14 +210,16 @@
                 </ul>
                 <ul class="navbar-nav navbar-nav-right">
                     <li class="nav-item nav-search d-none d-md-block mr-0">
-                        <div class="input-group">
-                            <input type="text" class="form-control" placeholder="Search..." aria-label="search" aria-describedby="search">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text" id="search">
-                                    <i class="typcn typcn-zoom"></i>
-                                </span>
+                        <form action="@ViewBag.SearchUrl">
+                            <div class="input-group">
+                                <input type="search" value="@ViewBag.SearchKeyword" name="k" class="form-control" placeholder="Search..." aria-label="search" aria-describedby="search">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="search">
+                                        <i class="typcn typcn-zoom"></i>
+                                    </span>
+                                </div>
                             </div>
-                        </div>
+                        </form>
                     </li>
                 </ul>
             </div>
@@ -534,7 +540,10 @@
     <script src="js/todolist.js"></script>
     <!-- endinject -->
     <!-- Custom js for this page-->
+   @*  <script src="~/js/notify.js"></script> *@
     <script src="js/dashboard.js"></script>
+   @*  <a href="d:\source\repos\online_shopping_cart\online_shopping_cart\views\shared\notifypartial.cshtml"></a> *@
+    <script src="~/js/sweetalert.js"></script>
     <!-- End custom js for this page-->
     @RenderSection("js", required: false)
 </body>
