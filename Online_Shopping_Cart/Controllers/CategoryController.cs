@@ -62,7 +62,7 @@ namespace Online_Shopping_Cart.Controllers
                      ca = "Category";
 
                 }
-                else if(model.Type.Equals(10))
+                else
                 {
                     ca = "Brand";
                 }
@@ -108,11 +108,11 @@ namespace Online_Shopping_Cart.Controllers
                     ca = "Category";
 
                 }
-                else if (model.Type.Equals(10))
+                else
                 {
                     ca = "Brand";
                 }
-                TempData["Edit"] =ca ;
+                TempData["Edit"] =ca.ToString() ;
                 return RedirectToAction(nameof(Index));
             }
            
