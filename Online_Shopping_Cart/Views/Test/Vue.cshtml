@@ -1,0 +1,86 @@
+﻿ 
+@{
+    ViewData["Title"] = "Vue";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+@*this is app-2 practice in This we have created a simple calculator*@
+        <div id="app2">
+   
+        <div :class="v1+v2<100? 'bg-danger': 'bg-success'">
+        Status
+        </div>
+
+       <input v-model.number="v1" placeholder="value 1" />
+    
+       <input v-model.number="v2" placeholder="value 2" />
+
+
+       <input value="+" type="button"  @@click="aOperation('+')" />
+       <input value="-" type="button" @@click="aOperation('-')" />
+       <br/>
+       <input value="*" type="button"  @@click="aOperation('*')" />
+       <input value="clear" type="button"   @@click="otype=''" /> 
+
+       <div v-if="isloading"><span class="fa fa-spin fa-spinner text-info"></span></div>
+       
+       <h3 v-if="otype=='+'"       >Sum of {{v1}} and {{v2}} = {{result}}   </h3>
+       <h3 v-else-if="otype=='-'"  >Diff of {{v1}} and {{v2}} = {{result}}   </h3>
+       <h3 v-else-if=" otype=='*'" >Proudct of {{v1}} and {{v2}} = {{result}}</h3>
+       
+       <h3 v-else class="text text-info font font-italic"> Waiting for press the Button</h3>
+       <!--Use curly braces where you have to write the javascript models/Data-->
+       <input type="text" v-model="color"/>
+       <div v-if="color" :style="{backgroundColor: color} "> your color is {{color}}</div> 
+</div>
+
+ @section js{
+    <script>
+        var app = Vue.createApp({//created app
+            //in this we have the data 
+           data(){
+               return {
+                   v1:'',
+                   v2:'',
+                   result:'',
+                   otype:'',
+                   color:'',
+                   isloading: ''//its default value is false that's why we are not giving it false
+               }
+           },
+           methods: {
+               aOperation(op) {
+                   setTimeout(function () {
+                       this.isloading = true;// why we write this instead of app because this is inside the app not inside the setTimeOut
+                       app.otype = op;
+                       if (op == '+') {
+                           app.result = app.v1 + app.v2;
+                       }
+                       else if (op == '-') {
+                            app.result = app.v1 - app.v2;
+                       }
+                       else if (op == '*') {
+                            app.result = app.v1 * app.v2;
+                       }
+                       app.isloading = '';
+                   }, 250);
+               }
+           }
+        }).mount('#app2');
+    </script>
+} 
+
+@*This is the app-1 and in this we are displaying the simple message*@
+@*with the app1
+ <div id="app1"> Your message is : {{msg}} </div>
+@section js{
+    <script>
+        var app = Vue.createApp({
+           data(){
+               return {
+                    msg : 'hello this is your first vue app'
+               }
+           }
+        }).mount('#app1');
+    </script>
+} *@

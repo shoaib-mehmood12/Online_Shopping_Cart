@@ -1,0 +1,12 @@
+{
+  "version": "1.0",
+  "defaultProvider": "cdnjs",
+  "libraries": [
+    {
+      "destination": "wwwroot/lib/vue",
+      "files": [ "dist/vue.global.prod.js", "dist/vue.global.js" ],
+      "library": "vue@3.3.4",
+      "provider": "unpkg"
+    }
+  ]
+}

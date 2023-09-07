@@ -4,34 +4,39 @@ using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.CodeAnalysis.Scripting;
 using Online_Shopping_Cart.Data;
 using Online_Shopping_Cart.Models;
+using System.Security.Cryptography.Xml;
 
 namespace Online_Shopping_Cart.Controllers
 {
-    public class CategoryController : Controller
+    public class CategoriesController : Controller
     {
         //intializing the database we can use to store in data base by the simply using the word "context"
+       //injecting the database into the controller.
         private readonly AppDbContext _context;
-        public CategoryController(AppDbContext context)
+        public CategoriesController(AppDbContext context)
         {
             _context = context;   
         }
 
-
+        //this is the interface this each interface is connect to a specific view so that each interface will give the view according to the connection of view inside itself
+        //
         public IActionResult Index(string k)
         {
-            var categoryQuery = _context.Categories.AsQueryable();
-            if (!string.IsNullOrWhiteSpace(k))
+            //this whole code inside the index interface is to search inisde the category.
+            var categoryQuery = _context.Categories.AsQueryable();//we add here asQueryable In a way to Apply the queries so through the query we will find the string that user gives us.
+            if (!string.IsNullOrWhiteSpace(k))//if the string is not null(k) name of the string is K that we are geting from the user from the index view
             {
-                categoryQuery= categoryQuery.Where(x => x.Name.StartsWith( k) ||  x.Description.Contains(k));
+                categoryQuery = categoryQuery.Where(x => x.Name.StartsWith(k) || x.Description.Contains(k));
             }
-            ViewBag.SearchUrl = "/Category";
+            //we are defining the viewbag that in this table search and giving it key to search in the given table.
+            ViewBag.SearchUrl = "/Category";// also add this corresponding in the admin layout
             ViewBag.SearchKeyword = k;  
-            var data = categoryQuery.ToList();
-            return View(data); 
+            var data = categoryQuery.ToList();//the data we found above we added that data to list so we can 
+            return View(data); //displays the list of the data in the index vew that we have found above.
         }
         public IActionResult Create()
         {
-            return View(); 
+            return View();//returns the view of create (displays a create view to get the data from user)
         }
 
         [HttpPost]
@@ -41,19 +46,24 @@ namespace Online_Shopping_Cart.Controllers
             
             if(ModelState.IsValid)//check that whether the state of the model is valid or not( means have  the model contain the invalid or not if not then condition becomes true 
             {
-                if(model.Logo!=null && model.Logo.Length > 0)
+                //firstly we will get the logo image by the user and then we are storing the logo's URL in the database not actual image of the logo. 
+                // for this we are getting the Logo image from and then we storing the URL of that image only not the actual image of the logo. 
+                if(model.Logo!=null && model.Logo.Length > 0)// to store the image in the folder.
                 {
-                    string basePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot");
-                    string appPath = Path.Combine("images", "categories");
-                    string directryPath=Path.Combine(basePath, appPath);
-                    Directory.CreateDirectory(directryPath);
+                    string basePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot");// this Line combines the current working directory of the application with the "wwwroot" directory to create a full path to the "wwwroot" directory relative to where your application is running.
+                    string appPath = Path.Combine("images", "categories");// this line will combine the images and categories folder's Path and then store path into the appPath.
+                    string directryPath=Path.Combine(basePath, appPath);// this will combine the both basePath and appPath and then store thier path in the directoryPath.
+                    Directory.CreateDirectory(directryPath);// this line is creating folder(directory)  inside the wwwroot--> images-->>categories
+                   // Encrypt the name of the file in a way to get rid of duplicate image overridden
                     string fileName = Path.GetRandomFileName().Replace(".", "") + Path.GetExtension(model.Logo.FileName);
                     
-                    using var stream = new FileStream(Path.Combine(directryPath, fileName), FileMode.Create);//image create in file
-                        model.Logo.CopyTo(stream);
+                    using var stream = new FileStream(Path.Combine(directryPath, fileName), FileMode.Create);//image create/paste in a directory-->> we are joining the file name with the directrypath and then we are storing the whole path of the image to the var stream
+                    model.Logo.CopyTo(stream);//copying the model.logo to the stream // model is an Object and the logo is its property. // we are desposing the previous name of the image.
+                      
                     model.LogoUrl =Path.Combine(appPath,fileName).Replace("\\","/");
                 }
                 //_context.Category.Add(model).
+                //why we add the model instead of directly saving the changes?
                 _context.Add(model);//the database note the attributes(values) of the  category model
                 _context.SaveChanges();//the the database will add the values of the category to the Actuall table
                                        //form one action to another action
@@ -95,9 +105,9 @@ namespace Online_Shopping_Cart.Controllers
                     Directory.CreateDirectory(directryPath);
                     string fileName = Path.GetRandomFileName().Replace(".", "") + Path.GetExtension(model.Logo.FileName);
 
-                    using var stream = new FileStream(Path.Combine(directryPath, fileName), FileMode.Create);//image create in file
+                    using var stream = new FileStream(Path.Combine(directryPath, fileName), FileMode.Create);//creating the file && Opening the file because the stream is used to read and write the data so we are using the stream to firstly open the file and then we are using the same stream below the line and pasted the logo model to the file.
                     model.Logo.CopyTo(stream);
-                    model.LogoUrl = Path.Combine(appPath, fileName).Replace("\\", "/");
+                    model.LogoUrl = Path.Combine(appPath, fileName).Replace("\\", "/");// Pasting Photo inthe file
                 }
 
 
@@ -116,7 +126,7 @@ namespace Online_Shopping_Cart.Controllers
                 return RedirectToAction(nameof(Index));
             }
            
-            return View(model);
+            return View();
 
         }
         public IActionResult Delete(string id)
@@ -132,15 +142,12 @@ namespace Online_Shopping_Cart.Controllers
         public IActionResult DeleteConfirm(string id)
         {
 
-            var category = _context.Categories.Find(id);
+            var category = _context.Categories.Find(id);// we are storing the detail of the category from the category table whose id matches to the variable named as the category.
             if(category == null) return NotFound();
             _context.Categories.Remove(category);
             _context.SaveChanges();
             TempData["Delete"] = "Item Deleted";
             return RedirectToAction(nameof(Index));
         }
-
-         
-
     }
 }

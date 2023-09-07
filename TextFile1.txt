@@ -1,6 +1,10 @@
 1. TempData: this is the temprary storage that is use to display the data only once when our request complete the data will dispose automatically.
 2. ViewBag : move the data form the action to view and view to layout page,but there is conditoin that it will works inside the same controller.
-              action -> view && view-> layout Page 
+             action -> view && view-> layout Page 
+             --->>it is the base class of the controller class
+    *-->>>>In ASP.NET MVC, ViewData is similar to ViewBag, which transfers data from Controller to View. ViewData is of Dictionary type, whereas ViewBag is of dynamic type. However, both store data in the same dictionary internally. ViewData is a dictionary, so it contains key-value pairs where each key must be a string.
+    --->>>>The ViewBag in ASP.NET MVC is used to transfer temporary data (which is not included in the model) from the controller to the view.
+    2.1-> introduced in (.net4.5)a dynamic type checking the type at the runtime instead of the compile time. 
 3. Any() is Nullable boolean
 4. ?? means that if the model is null then it's left side data and if not null then right side data // ref: used in the product model line#
 5.Directory.CreateDirectory(directryPath); ---> create the directory if not exists.
@@ -9,3 +13,6 @@
 8. View Model:
             -> this is a concept in this we use select instead of include to get the specific coloums.
             -> the product view model will not be added in the data base.
+
+9. The "ModelState" property of a controller represents the submitted values, and validation errors in those values if such errors exist, during a POST action
+        ->basically this modelstate property is the check for the model.

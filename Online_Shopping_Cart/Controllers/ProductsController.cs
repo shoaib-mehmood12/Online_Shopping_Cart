@@ -37,7 +37,7 @@ namespace Online_Shopping_Cart.Controllers
         {
 
             //ref: line# 07 category create
-          if(!_context.Categories.Any(m=>m.Status && m.Type == CategoryType.Category)) //if we are creating the product so this is mandatory that the we have the brand and category both will have exists with the active status.
+          if(!_context.Categories.Any(m => m.Status && m.Type == CategoryType.Category)) //if we are creating the product so this is mandatory that the we have the brand and category both will have exists with the active status.
             {
                 TempData["Notification"] = "No category exist with the active status"; // to store the data temporary and when the request complete the data will dispose.
                 return RedirectToAction("create","category");//if there no category whose type is category and status is active then redirect to action whose method is create and the model is category
@@ -130,7 +130,7 @@ namespace Online_Shopping_Cart.Controllers
                             });
 
                         }
-                    }
+                    }                                                                                                                 
                     var imagesToDelete= _context.ProductImages.Where(m=>m.ProductId==model.Id && deleteImagesIds.Contains(m.Id)).ToList();//why we add product id---> for safety purpose in a way that user will only delete the imgaes that is belonging to to its product
                 
                 _context.AddRange(images);

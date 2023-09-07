@@ -4,6 +4,14 @@ namespace Online_Shopping_Cart.Controllers
 {
     public class TestController : Controller
     {
+        public IActionResult Vue()
+        {
+            return View();
+        }
+        public IActionResult Vue2()
+        {
+            return View();
+        }
         public IActionResult OneTech()
         {
             return View();

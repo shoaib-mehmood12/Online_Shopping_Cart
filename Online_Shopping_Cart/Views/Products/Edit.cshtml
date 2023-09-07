@@ -6,114 +6,153 @@
     var categories = new SelectList(_context.Categories.Where(m => m.Status && m.Type == CategoryType.Category).Select(m => new { m.Id, m.Name }).ToList(), "Id", "Name", Model?.CategoryId);
     var brands = new SelectList(_context.Categories.Where(m => m.Status && m.Type == CategoryType.Brand).Select(m => new { m.Id, m.Name }).ToList(), "Id", "Name", Model?.BrandId);
 }
-<form asp-action="Edit" enctype="multipart/form-data">
-<div class="row">
-    <div class="col-md-6">
-        <div class="card">
-            <div class="card-body">
-                <h4 class="card-title font-weight-bolder">Updating Product</h4>
-                <p class="card-description">
-                   Setup section
-                </p>
-                <div class="row">
-                    <div class="col-md-8">
-                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                            <input type="hidden" asp-for="Id "/>
-                            <div class="form-group">
-                                <label asp-for="Slug" class="control-label">Change Slug</label>
-                                <input asp-for="Slug" class="form-control" />
-                                <span asp-validation-for="Slug" class="text-danger"> </span>
+<div id="productUpdateApp">
+    <form asp-action="Edit" enctype="multipart/form-data">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title font-weight-bolder">Updating Product</h4>
+                        <p class="card-description">
+                            Setup section
+                        </p>
+                        <div class="row">
+                            <div class="col-md-8">
+                                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                <input type="hidden" asp-for="Id " />
+                                <div class="form-group">
+                                    <label asp-for="Slug" class="control-label">Change Slug</label>
+                                    <input asp-for="Slug" class="form-control" />
+                                    <span asp-validation-for="Slug" class="text-danger"> </span>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="Name" class="control-label">Change Name</label>
+                                    <input asp-for="Name" class="form-control" />
+                                    <span asp-validation-for="Name" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="Description" class="control-label">Change Description</label>
+                                    <input asp-for="Description" class="form-control" />
+                                    <span asp-validation-for="Description" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="Price" class="control-label">Change Price</label>
+                                    <input asp-for="Price" class="form-control" />
+                                    <span asp-validation-for="Price" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="BrandId" class="control-label">Change Brand</label>
+                                    <select asp-for="BrandId" class="form-control" asp-items="@brands">
+                                        <option value="">
+                                            Choose Brand
+                                        </option>
+                                    </select>
+                                    <span asp-validation-for="BrandId" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="Stock" class="control-label">Upadate Stock</label>
+                                    <input asp-for="Stock" class="form-control" />
+                                    <span asp-validation-for="Stock" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="ReleaseDate" class="control-label">Update Release Date</label>
+                                    <input asp-for="ReleaseDate" class="form-control" />
+                                    <span asp-validation-for="ReleaseDate" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="CategoryId" class="control-label">Change Category</label>
+                                    <select asp-for="CategoryId" class="form-control" asp-items="@categories">
+                                        <option value=""> Choose Category</option>
+                                    </select>
+                                    <span asp-validation-for="CategoryId" class="text-danger"></span>
+                                </div>
                             </div>
-                            <div class="form-group">
-                                <label asp-for="Name" class="control-label">Change Name</label>
-                                <input asp-for="Name" class="form-control" />
-                                <span asp-validation-for="Name" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 ">
+                <div class="card">
+                    <div class="card-body">
+
+                        <h3 class="card-title  font-weight-bolder">Product Images</h3>
+                        <p class="card-description">
+                            Existing Images
+                        </p>
+                        @*                     @if (Model.Images.Any())//to display the previous images that are stored in a product Images table(model)
+                        {
+                        int i=0;
+
+                        <div class="row">
+                        @foreach (var images in Model.Images.OrderBy(m => m.DbEntryTime))
+                        {
+                        i++;
+                        <div class="col-md-3">
+                        <img src="/@images.URL"  style="height:50px;" class="img w-40 mb-2"/>
+                        <br/>
+                        Delete? <input type="checkbox" name="DeleteImagesIds" value="@images.Id" />
+                        </div>
+
+                        }
+                        </div>
+                        <br/>
+                        <div>Number of Images: @i </div>
+                        } *@
+
+                        <div class="row">
+                            <div class="col-md-3" v-for="i in images.filter(m=>!m.deleted)">
+                                <div>
+                                    <span class="fa fa-trash text-danger" @@click="i.deleted=true"></span>
+                                </div>
+                                <img :src="`/${i.url}`" class="img" style="width:100%" />
+                                <input v-if="i.deleted" type="text" name="deleteImagesIds" :value="i.id" />
+                            </div>                                                    
+                        </div>
+                        <div class="row" v-if="images.filter(m => m.deleted).length">
+                            <p class="text-danger col-md-12">Following images will be deleted on update.</p>
+
+                            <div class="col-md-3" v-for="i in images.filter(m => m.deleted)">
+                                <div>
+                                    <span class="fa fa-trash text-danger" @@click="i.deleted = false"></span>
+                                </div>
+                                <img :src="`/${i.url}`" class="img" style="width:100%" />
+                                <input type="hidden" name="deleteImagesIds" :value="i.id" />
                             </div>
-                            <div class="form-group">
-                                <label asp-for="Description" class="control-label">Change Description</label>
-                                <input asp-for="Description" class="form-control" />
-                                <span asp-validation-for="Description" class="text-danger"></span>
-                            </div>
-                            <div class="form-group">
-                                <label asp-for="Price" class="control-label">Change Price</label>
-                                <input asp-for="Price" class="form-control" />
-                                <span asp-validation-for="Price" class="text-danger"></span>
-                            </div>
-                            <div class="form-group">
-                                <label asp-for="BrandId" class="control-label">Change Brand</label>
-                                <select asp-for="BrandId" class="form-control" asp-items="@brands">
-                                    <option value="">
-                                        Choose Brand
-                                    </option>
-                                </select>
-                                <span asp-validation-for="BrandId" class="text-danger"></span>
-                            </div>
-                            <div class="form-group">
-                                <label asp-for="Stock" class="control-label">Upadate Stock</label>
-                                <input asp-for="Stock" class="form-control" />
-                                <span asp-validation-for="Stock" class="text-danger"></span>
-                            </div>
-                            <div class="form-group">
-                                <label asp-for="ReleaseDate" class="control-label">Update Release Date</label>
-                                <input asp-for="ReleaseDate" class="form-control" />
-                                <span asp-validation-for="ReleaseDate" class="text-danger"></span>
-                            </div>
-                            <div class="form-group">
-                                <label asp-for="CategoryId" class="control-label">Change Category</label>
-                                <select asp-for="CategoryId" class="form-control" asp-items="@categories">
-                                    <option value=""> Choose Category</option>
-                                </select>
-                                <span asp-validation-for="CategoryId" class="text-danger"></span>
-                            </div>
+                        </div>
+
+                        <div class="form-group mt-4">
+
+                            <label asp-for="Uploads" class="control-label">Update</label>
+                            <input asp-for="Uploads" type="file" multiple /> @* multiple indicates that we have to add more than one file/picture*@
+                            <span asp-validation-for="Uploads" class="text-danger"></span>
+                        </div>
+                        <div class="form-group mt-4">
+                            <input type="submit" value="Update" class="btn btn-primary" />
+                        </div>
+                        <div>
+                            <a asp-action="Index">Back to List</a>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-    <div class="col-md-6 ">
-        <div class="card">
-            <div class="card-body">
-                  
-                <h3 class="card-title  font-weight-bolder">Product Images</h3>
-                    <p class="card-description">
-                        Existing Images
-                    </p>
-                    @if (Model.Images.Any())//to display the previous images that are stored in a product Images table(model)
-                    {
-                        int i=0;
-                        
-                        <div class="row">
-                            @foreach (var images in Model.Images.OrderBy(m => m.DbEntryTime))
-                            {
-                                i++;
-                                <div class="col-md-3">
-                                    <img src="/@images.URL"  style="height:50px;" class="img w-40 mb-2"/>
-                                    <br/>
-                                   Delete? <input type="checkbox" name="DeleteImagesIds" value="@images.Id" />
-                                </div>
-                            
-                            }
-                        </div>
-                        <br/>
-                        <div>Number of Images: @i </div>
-                    }
+    </form>
 
-                    <div class="form-group mt-4">
-                 
-                        <label asp-for="Uploads" class="control-label">Update</label>
-                        <input asp-for="Uploads" type="file" multiple /> @* multiple indicates that we have to add more than one file/picture*@
-                        <span asp-validation-for="Uploads" class="text-danger"></span>
-                    </div>
-                    <div class="form-group mt-4">
-                        <input type="submit" value="Update" class="btn btn-primary" />
-                    </div>
-                    <div>
-                        <a asp-action="Index">Back to List</a>
-                    </div>
-            </div>
-        </div>
-    </div>
 </div>
- </form>
 
 
+ @section js{
+    <script>
+        var productUpdateApp = Vue.createApp({
+            data() {
+                return {
+                    images: @Json.Serialize(Model.Images.OrderBy(m=> m.Rank).Select(m=> new{m.Id,m.URL, Deleted =false}))
+                //id we have to sent  to backend
+                //url we need to display on the front page
+                //on the basis of delete we move the picture from up to down and down to up 
+                //how c# can    sent its data to js? --> through the Json.
+                }
+            }
+        }).mount("#productUpdateApp");
+    </script>
+ }

@@ -1,0 +1,47 @@
+﻿
+@{
+    ViewData["Title"] = "Vue2";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+
+@*this is app-2 practice in This we have created a simple calculator*@
+ <div id="app3">
+    <input type="text" v-model="msg" />
+</div> 
+
+
+
+
+ @section js{
+    <script>
+        var app = Vue.createApp({//created app
+            //in this we have the data
+            data() {
+                return {
+                    msg: ''
+                }
+            },
+            methods:{
+            },
+            created(){
+                console.log('created');
+            },
+            updated(){
+                console.log('Updated');
+            },
+            mounted(){
+                console.log('Mounted');
+            },
+            watch:{
+                "msg" : function(nv,ov){
+                    console.log("New Value: " + nv);
+                    console.log("Old value: " + ov);
+                }
+             }
+
+        }).mount('#app3');
+    </script>
+} 
+
+
