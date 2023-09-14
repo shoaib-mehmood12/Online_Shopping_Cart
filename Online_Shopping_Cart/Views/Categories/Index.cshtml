@@ -14,12 +14,17 @@
         <div class="card">
             <div class="card-body">
                 <h4 class="card-title"> Details of Categories
-                    <a asp-action="Create" class="btn btn-info btn-sm float-right font-weight-bold "><i class="fa fa-plus"></i> Create New</a>
+                    <a asp-action="Create"  class=" btn-create-category btn btn-info btn-sm float-right font-weight-bold "><i class="fa fa-plus"></i> Create New inline</a>        @*access through Inline*@ 
+                    <a asp-action="Create" class=" btn btn-info btn-sm float-right font-weight-bold "><i class="fa fa-plus"></i> Create New </a>               @*access through the Url*@
                 </h4>
                 <p class="card-description">
                     Category Index
                 </p>
-
+                @* why d-none because on reload page the loader is visible *@
+                <div class="category-create-form">
+                    <div class="form-area"></div>
+                    <i class="fa fa-spin fa-spinner text-info d-none"></i>
+                    </div>
                 <table class="table">
                     <thead>
                         <tr>
@@ -80,8 +85,8 @@
                                 </td>
 
                                 <td>
-                                    <a asp-action="Edit" asp-route-id="@item.Id"class="fa fa-edit"></a> |
-                                    <a asp-action="Details" asp-route-id="@item.Id" class="fa fa-eye text-success"></a> |
+                                    <a asp-action="Edit" asp-route-id="@item.Id"class="fa fa-edit ml-2"></a>
+                                    <a asp-action="Details" asp-route-id="@item.Id" class="fa fa-eye text-success"></a>  
                                     <a asp-action="Delete" asp-route-id="@item.Id" class="fa fa-trash text-danger"></a>
                                 </td>
                             </tr>
@@ -93,51 +98,68 @@
     </div>
 </div>
 
-@* Create category notification  *@
-@if (TempData["Notification"] != null)
-{
-    @section js{
 
+@section js{
     <script>
-        Swal.fire({
-            position: 'center',
-            icon: 'success',
-            title: '@msg created',
-            showConfirmButton: false,
-            timer: 1500
-        })
+        //s$(".category-create-form").hide();
+        // e is basically some event in this case e is click events 
+        $(".btn-create-category").click(function (e) {
+             e.preventDefault();  // to stop the default behaviour of the create new Button(the default behaviour of the create is that it will have the hyperlink that will move the page to the new create page s in this line we are stopping this)
+             //firstly we will get the response(page of the create)
+             $(".category-create-form .fa-spinner").removeClass('d-none');// spinner will start displaying because we remove the d-none
+             $.get('/Categories/Create?iar=true', function (res) {    // in response our Whole create page is stored and by using this res we will display the create page the index page
+             $(".category-create-form .fa-spinner").addClass('d-none'); // spinner will stop displaying because we add the d-none
+             $(".category-create-form .form-area").hide().html(res).slideDown(500); // sending the response data inside the div which name is category-create-form so the form will display inside the div and above the index table when we click on Create new button on the index view.
+                           
+            })
+        });
     </script>
-    }
-}
-@* Delete category notification *@
-@if (TempData["Delete"] != null)
-{
-    @section js{
 
-    <script>
-        Swal.fire({
-            position: 'center',
-            icon: 'success',
-            title: '@del',
-            showConfirmButton: false,
-            timer: 1500
-        })
-    </script>
-    }
-}
-@if (TempData["Edit"] != null)
-{
-    @section js{
+                                                 @* Notification section *@
+            @* Create category notification  *@
+        @if (TempData["Notification"] != null)
+        {
+          <script>
+                Swal.fire({
+                    position: 'center',
+                    icon: 'success',
+                    title: '@msg created',
+                    showConfirmButton: false,
+                    timer: 1500
+                })u
+        </script>
 
-    <script>
-        Swal.fire({
-            position: 'center',
-            icon: 'success',
-            title: '@edit Updated' ,
-            showConfirmButton: false,
-            timer: 1500
-        })
-    </script>
-    }
+        }
+        @* Delete category notification *@
+        @if (TempData["Delete"] != null)
+        {
+        <script>
+            Swal.fire({
+                position: 'center',
+                icon: 'success',
+                title: '@del',
+                showConfirmButton: false,
+                timer: 1500
+            })
+        </script>
+
+        }
+        @* edit notificaiton *@
+        @if (TempData["Edit"] != null)
+        {
+        <script>
+            Swal.fire({
+                position: 'center',
+                icon: 'success',
+                title: '@edit Updated',
+                showConfirmButton: false,
+                timer: 1500
+            })
+        </script>
+
+        }
+
 }
+
+
 

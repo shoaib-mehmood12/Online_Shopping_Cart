@@ -1,6 +1,7 @@
 1. TempData: this is the temprary storage that is use to display the data only once when our request complete the data will dispose automatically.
-2. ViewBag : move the data form the action to view and view to layout page,but there is conditoin that it will works inside the same controller.
+2. ViewBag : move the data form the action(HomeController--> action(index)-->viewBag this view bag is only Useable by the index view of the HomeControlelr) to view and view to layout page,but there is conditoin that it will works inside the same controller.
              action -> view && view-> layout Page 
+             --->> it works in the same action's view means action is index so works in index
              --->>it is the base class of the controller class
     *-->>>>In ASP.NET MVC, ViewData is similar to ViewBag, which transfers data from Controller to View. ViewData is of Dictionary type, whereas ViewBag is of dynamic type. However, both store data in the same dictionary internally. ViewData is a dictionary, so it contains key-value pairs where each key must be a string.
     --->>>>The ViewBag in ASP.NET MVC is used to transfer temporary data (which is not included in the model) from the controller to the view.
@@ -16,3 +17,11 @@
 
 9. The "ModelState" property of a controller represents the submitted values, and validation errors in those values if such errors exist, during a POST action
         ->basically this modelstate property is the check for the model.
+
+10. The c# code run on the Server and the js Code is run on browser.
+11. if you want give the data from the server/database/or from any other source to Java-Script so there we need te Json because Json is understand by Both Js and c#
+12. In controller we add add the AppDbContext by using the constructor but in views we will not use the constructor so at that point we inject the database into the views
+13. Roles:
+    admin--->> do every kind of work related to application
+    moderator--->>have minimum amounts of permission alloted to him.
+    client-->> who purchase the material from us.

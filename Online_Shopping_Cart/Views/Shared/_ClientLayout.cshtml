@@ -1,5 +1,7 @@
-﻿@{
-	Layout = null;
+﻿@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor ContextAccessor
+@{
+	string userName = ContextAccessor.HttpContext.Session.GetString("UN");
 } @* layout not appear *@
 
 <!DOCTYPE html>
@@ -36,8 +38,8 @@
 				<div class="container">
 					<div class="row">
 						<div class="col d-flex flex-row">
-							<div class="top_bar_contact_item"><div class="top_bar_icon"><img src="images/phone.png" alt=""></div>+38 068 005 3570</div>
-							<div class="top_bar_contact_item"><div class="top_bar_icon"><img src="images/mail.png" alt=""></div><a href="mailto:fastsales@gmail.com">fastsales@gmail.com</a></div>
+							<div class="top_bar_contact_item"><div class="top_bar_icon"><img src="images/phone.png" alt=""></div>+341-5941728</div>
+							<div class="top_bar_contact_item"><div class="top_bar_icon"><img src="images/mail.png" alt=""></div><a href="mailto:iamsmabbasi@gmail.com">iamsmabbasi@gmail.com</a></div>
 							<div class="top_bar_content ml-auto">
 								<div class="top_bar_menu">
 									<ul class="standard_dropdown top_bar_dropdown">
@@ -61,8 +63,20 @@
 								</div>
 								<div class="top_bar_user">
 									<div class="user_icon"><img src="images/user.svg" alt=""></div>
-									<div><a href="#">Register</a></div>
-									<div><a href="#">Sign in</a></div>
+									<div><a href="/Accounts/Create">Register</a></div>
+									<div>
+										@if (!string.IsNullOrEmpty(userName))
+										{
+											
+											<p class="text-center">
+												<a href="/Login/Logout" class=" btn btn-sm font-weight-bolder">Logout</a>
+											</p>
+										}
+										else
+										{
+											<p class=" btn btn-sm"><a href="/Login">Login</a></p>
+										}
+									</div>
 								</div>
 							</div>
 						</div>
@@ -140,6 +154,7 @@
 					</div>
 				</div>
 			</div>
+
 
 			<!-- Main Navigation -->
 

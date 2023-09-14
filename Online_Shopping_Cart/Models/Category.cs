@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Mvc;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Online_Shopping_Cart.Models
@@ -7,6 +8,7 @@ namespace Online_Shopping_Cart.Models
     {
         [Required(ErrorMessage = "Name is required")]
         [StringLength(50)]
+        [Remote("CategoryNameCheck","RemoteValidations",AdditionalFields ="Id",ErrorMessage="Name already exists")]// this is used for check that whether this name already exists or not in the database if exist then send the error and not enter the value.
         public string Name { get; set; }//name of the category-->>e.g samsung    
 
         [Required(ErrorMessage = "Description Required")]

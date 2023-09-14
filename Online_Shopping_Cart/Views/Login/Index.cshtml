@@ -1,0 +1,25 @@
+﻿@model LoginViewModel
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_ClientLayout.cshtml";
+}
+
+<form asp-action="index"><!--this is the login(index action with the parameters) this will give the values of the username and the password to the session for the use -->
+    <div class="form-group ">
+            <label class="col-md-3"></label>
+            <div col-md-7>
+                <input type="text" placeholder="Email" asp-for="Email"/> 
+                   <span asp-validation-for="Email"></span>
+            </div>
+    </div>
+    <div class="form-group ">
+        <label class="col-md-3"></label>
+        <div col-md-7>
+            <input type="text" placeholder="Password" asp-for="Password" />
+            <span asp-validation-for="Password"></span>
+        </div>
+    </div>
+
+<input type="submit" value="Login" />
+</form>
+

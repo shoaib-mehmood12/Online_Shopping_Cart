@@ -13,7 +13,7 @@ namespace Online_Shopping_Cart.Migrations
 {
     [DbContext(typeof(AppDbContext))]
     [Migration("20230825043646_categories")]
-    partial class Categories
+    partial class Category
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

@@ -5,7 +5,7 @@
 namespace Online_Shopping_Cart.Migrations
 {
     /// <inheritdoc />
-    public partial class Categories : Migration
+    public partial class Category : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

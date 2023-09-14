@@ -34,9 +34,17 @@ namespace Online_Shopping_Cart.Controllers
             var data = categoryQuery.ToList();//the data we found above we added that data to list so we can 
             return View(data); //displays the list of the data in the index vew that we have found above.
         }
-        public IActionResult Create()
+        public IActionResult Create(bool iar)
         {
-            return View();//returns the view of create (displays a create view to get the data from user)
+            if (iar)// in the index view when the inline crate is call so at the index ajax we have set the iar true so through this that will true this condition and send the partial view of the create in the index page
+            {
+                Thread.Sleep(500); // for loader/spinner view
+                return PartialView();//returns the partialview of create (displays a create view to get the data from user at the same index page without page reaload)
+            }
+            else// if we not approacing the index inline view so we will send the normal create-page view  
+            {
+                return View();// normal view of the create
+            }
         }
 
         [HttpPost]
