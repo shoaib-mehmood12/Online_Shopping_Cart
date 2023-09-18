@@ -24,4 +24,11 @@
 13. Roles:
     admin--->> do every kind of work related to application
     moderator--->>have minimum amounts of permission alloted to him.
-    client-->> who purchase the material from us.
+    client-->> who purchase the material from us. 
+
+14. things that are injected in the Dependency injeciton are of three types:
+        singleton: Object only created once when the application created.
+        Scope: Object created on Request  and used when required . I give the key to my brother and then i will give the lockers key to my brother and then tell him to give me back after use.   
+        transient: create new object on every request.e.g. if we have locker and we not allow the locker to open any one so we apply condition there we open the locker under our vision.(sir pe kharhy ho k) 
+15. in single request the loggedin User checked again and again.
+16. database ki service scoped use hoti ha Objet will dispose when the request get Back.                           

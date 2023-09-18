@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Online_Shopping_Cart.Data;
+using Online_Shopping_Cart.Handlers;
 using Online_Shopping_Cart.Models;
 
 namespace Online_Shopping_Cart.Controllers
@@ -14,7 +15,7 @@ namespace Online_Shopping_Cart.Controllers
             _context = context;
         }
 
-        public IActionResult Index() //when we press the Login button on the client side this weill call.
+        public IActionResult Index() //when we press the Login button on the client side this w'll call.
         {
             return View();
         }
@@ -29,8 +30,8 @@ namespace Online_Shopping_Cart.Controllers
                 return View(model);
             }
             if(( user.Id + model.Password).Encrypt()==user.EncryptedPassword)
-            {
-                HttpContext.Session.SetString("UN",user.Email);//on the sesssion on the email of the user whose password matches     
+            {     //we are storing the Id(primary key) in the session to identify the sesssion
+                HttpContext.Session.SetString(GlobalsConfig.LoginSessionName,user.Id);//on the sesssion on the email of the user whose password matches     
                 return RedirectToAction("Index", "Home");//index of HomeController 
             }
             ModelState.AddModelError("Password", "Invalid password");

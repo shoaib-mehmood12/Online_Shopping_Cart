@@ -30,7 +30,16 @@ namespace Online_Shopping_Cart.Models
         public string shoppingCartId { get; set; } 
         public ShoppingCart ShoppingCart { get; set; }
     }
-    public class LoginViewModel {
+
+	public class AppUserViewModel : SharedModel
+	{
+		public string Name { get; set; }
+		public string Email { get; set; }
+		public List<string> Roles { get; set; }
+	}
+
+
+	public class LoginViewModel {
         [Required(ErrorMessage ="Email Invalid")]
         [EmailAddress]
         public string Email { get; set; }

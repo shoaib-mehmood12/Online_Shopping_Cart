@@ -2,6 +2,9 @@
 using Microsoft.Extensions.DependencyInjection;
 using Online_Shopping_Cart.Data;
 var builder = WebApplication.CreateBuilder(args);
+//we are using the trasiant of the HttpAccessor instead of adding.
+//builder.Services.AddHttpContextAccessor();
+builder.Services.AddTransient<IHttpContextAccessor, HttpContextAccessor>();// its our choise to make it scope or transient.
 string connectionString = builder.Configuration.GetConnectionString("SqlConnection");
 builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(connectionString?? throw new InvalidOperationException("Connection string 'AppDbContext' not found.")));
 //builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("SqlConnection") ?? throw new InvalidOperationException("Connection string 'AppDbContext' not found.")));
@@ -21,7 +24,6 @@ builder.Services.AddSession(m =>
     //m.IOTimeout = TimeSpan.FromMinutes(20);
      
 });//adding the service of the session to the builder
-builder.Services.AddHttpContextAccessor();
 
 var app = builder.Build();
 

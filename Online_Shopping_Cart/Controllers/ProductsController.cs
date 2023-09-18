@@ -1,15 +1,20 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.EntityFrameworkCore;
 using Online_Shopping_Cart.Data;
+using Online_Shopping_Cart.Handlers;
 using Online_Shopping_Cart.Models;
 using System.Security.Policy;
 
 namespace Online_Shopping_Cart.Controllers
 {
+    //[Authorized(Roles =$"{GlobalsConfig.AdminRole},{GlobalsConfig.ShopkeeperRole}")]// Inside the brackets it will not accept the variables
+    [Authorized]
     public class ProductsController : Controller
     {
+       
         private readonly AppDbContext _context;
         public ProductsController(AppDbContext context)
         {

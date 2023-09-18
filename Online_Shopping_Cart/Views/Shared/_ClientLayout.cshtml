@@ -1,7 +1,8 @@
 ﻿@using Microsoft.AspNetCore.Http
+
 @inject IHttpContextAccessor ContextAccessor
 @{
-	string userName = ContextAccessor.HttpContext.Session.GetString("UN");
+	string userName = ContextAccessor.HttpContext.Session.GetString(GlobalsConfig.LoginSessionName);
 } @* layout not appear *@
 
 <!DOCTYPE html>
@@ -40,6 +41,7 @@
 						<div class="col d-flex flex-row">
 							<div class="top_bar_contact_item"><div class="top_bar_icon"><img src="images/phone.png" alt=""></div>+341-5941728</div>
 							<div class="top_bar_contact_item"><div class="top_bar_icon"><img src="images/mail.png" alt=""></div><a href="mailto:iamsmabbasi@gmail.com">iamsmabbasi@gmail.com</a></div>
+							<div class="top_bar_contact_item"><div class="top_bar_icon"></div>User: @userName</div>
 							<div class="top_bar_content ml-auto">
 								<div class="top_bar_menu">
 									<ul class="standard_dropdown top_bar_dropdown">
@@ -68,9 +70,9 @@
 										@if (!string.IsNullOrEmpty(userName))
 										{
 											
-											<p class="text-center">
-												<a href="/Login/Logout" class=" btn btn-sm font-weight-bolder">Logout</a>
-											</p>
+											
+												<a href="/Login/Logout"class=" font-weight-bolder">Logout</a>
+											
 										}
 										else
 										{
@@ -155,7 +157,7 @@
 				</div>
 			</div>
 
-
+		
 			<!-- Main Navigation -->
 
 			<nav class="main_nav">
