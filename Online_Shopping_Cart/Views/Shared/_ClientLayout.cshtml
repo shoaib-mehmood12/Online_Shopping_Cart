@@ -2,7 +2,11 @@
 
 @inject IHttpContextAccessor ContextAccessor
 @{
-	string userName = ContextAccessor.HttpContext.Session.GetString(GlobalsConfig.LoginSessionName);
+	//string userNames= ContextAccessor.HttpContext.Session.GetString(GlobalsConfig.LoginCookieName);
+	string userName = ContextAccessor.HttpContext.Request.Cookies[GlobalsConfig.LoginCookieName].toString();
+	//token = httpcontextAccessor.HttpContext.Request.Headers[GlobalsConfig.LoginCookieName].ToString();
+
+
 } @* layout not appear *@
 
 <!DOCTYPE html>
@@ -67,16 +71,14 @@
 									<div class="user_icon"><img src="images/user.svg" alt=""></div>
 									<div><a href="/Accounts/Create">Register</a></div>
 									<div>
-										@if (!string.IsNullOrEmpty(userName))
-										{
-											
-											
+										@if (! string.IsNullOrEmpty(userName))
+										{	
 												<a href="/Login/Logout"class=" font-weight-bolder">Logout</a>
 											
 										}
 										else
 										{
-											<p class=" btn btn-sm"><a href="/Login">Login</a></p>
+											<p><a  href="/Login">Login</a></p>
 										}
 									</div>
 								</div>

@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Online_Shopping_Cart.Data;
 using Online_Shopping_Cart.Handlers;
 using Online_Shopping_Cart.Models;
+using System.Net;
 
 namespace Online_Shopping_Cart.Controllers
 {  
@@ -30,8 +31,25 @@ namespace Online_Shopping_Cart.Controllers
                 return View(model);
             }
             if(( user.Id + model.Password).Encrypt()==user.EncryptedPassword)
-            {     //we are storing the Id(primary key) in the session to identify the sesssion
-                HttpContext.Session.SetString(GlobalsConfig.LoginSessionName,user.Id);//on the sesssion on the email of the user whose password matches     
+            {
+                LoginHistory loginHistory = new()
+                {
+                    ClientInfo = _context.httpcontextAccessor.HttpContext.Request.Headers["User-Agent"].ToString(),
+                    IpAddress = _context.httpcontextAccessor.HttpContext.Connection.RemoteIpAddress.ToString(),
+                    UserId = user.Id, 
+                    ValidTill = model.RememberMe ? DateTime.Now.AddDays(7):DateTime.Now.AddMinutes(20),
+
+				};
+                _context.Add(loginHistory);
+                _context.SaveChanges();
+                HttpContext.Response.Cookies.Append(GlobalsConfig.LoginCookieName, loginHistory.Token, new CookieOptions
+                {
+                     IsEssential = true,// because we not want ot delete the cookie early when move from one view to another.
+                     Expires = loginHistory.ValidTill,
+                });//sending the Token to user  
+                //we are storing the Id(primary key) in the session to identify the sesssion
+                //HttpContext.Session.SetString(GlobalsConfig.LoginSessionName,user.Id);//on the sesssion on the email of the user whose password matches     
+                
                 return RedirectToAction("Index", "Home");//index of HomeController 
             }
             ModelState.AddModelError("Password", "Invalid password");
@@ -52,9 +70,11 @@ namespace Online_Shopping_Cart.Controllers
 
 
 
-        public IActionResult Logout()
+        public IActionResult Logout()  
 		{
-			HttpContext.Session.Remove("UN");
+
+            // _context.LoginHistory.Where(m=>m.UserId==GlobalsConfig.LoginCookieName).ToList();
+            _context.httpcontextAccessor.HttpContext.Response.Cookies.Delete(GlobalsConfig.LoginCookieName);
 			return RedirectToAction("Index", "Home");//index of HomeController
 			
 		}

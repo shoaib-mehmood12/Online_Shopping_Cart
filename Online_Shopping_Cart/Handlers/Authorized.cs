@@ -8,12 +8,12 @@ namespace Online_Shopping_Cart.Handlers
 	public class Authorized : ActionFilterAttribute, IAuthorizationFilter
 	{
 		public string Roles { get; set; }
-		private List<string> RolesList=new();
+		private List<string> RolesList=new();  
 		
 		private bool IsAuthenticated { get; set; } = false;// purpose of this is : is the user is authenticted or not.
 		public void OnAuthorization(AuthorizationFilterContext context)
 		{
-			RolesList=(Roles ?? "").Split(new char[] {',',' '},StringSplitOptions.RemoveEmptyEntries).ToList();
+			RolesList=(Roles ?? "").Split(new char[] {',',' '},StringSplitOptions.RemoveEmptyEntries).ToList();// basically when the comma or Space will be seen so it will split until the end of the Role string and store each splitted value in hte list without the space and comma.
 			// we are not getting the session here because now we are getting  the user from the LoggedInUser. for this i have to inject the db context	
 			// when the call comes then at that time the services also add(scope/singelton/transit)
 			var db=(AppDbContext)  context.HttpContext.RequestServices.GetService(typeof(AppDbContext));

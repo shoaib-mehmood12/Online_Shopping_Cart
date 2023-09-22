@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Online_Shopping_Cart.Data;
+using Online_Shopping_Cart.Handlers;
 using Online_Shopping_Cart.Models;
 
 namespace Online_Shopping_Cart.Controllers
@@ -44,6 +45,8 @@ namespace Online_Shopping_Cart.Controllers
         //}
 
         // GET: Accounts/Create
+
+
         public IActionResult Create()
         {
             return View();
@@ -64,6 +67,29 @@ namespace Online_Shopping_Cart.Controllers
                 return RedirectToAction(nameof(Index));
             }
             return View(appUser);
+        }
+		public IActionResult ChangePassword()
+		{
+			return View();
+		}
+
+
+		[Authorized]
+        public IActionResult ChangePassword(AppUser model)
+        {
+            if (model.Password == model.ConfirmPassword)
+            {
+                var userId=  _context.GetLoggedInUser().Id;// we picked the id of the user only from the logged in table 
+                var user= _context.Users.Where(m=>m.Id==userId).FirstOrDefault();// now we are getting the whole User from the database to Update the user Password
+                user.EncryptedPassword = (userId + model.Password).Encrypt();
+                _context.SaveChanges();
+                _context.httpcontextAccessor.HttpContext.Response.Cookies.Delete(GlobalsConfig.LoginCookieName, new(){
+                    IsEssential=true,   
+                });
+                return RedirectToAction("index","Login");
+            }
+            ModelState.AddModelError("", "Both password not Found"); //The first parameter, "", is typically used to specify the field name associated with the error. In this case, an empty string "" is used, which implies that the error is not specific to a particular field but is a general error message. You might use a field name here if you want to associate the error with a specific form field.
+			return View(model);
         }
 
         // GET: Accounts/Edit/5

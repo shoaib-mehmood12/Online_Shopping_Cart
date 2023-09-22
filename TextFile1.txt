@@ -1,4 +1,4 @@
-1. TempData: this is the temprary storage that is use to display the data only once when our request complete the data will dispose automatically.
+1. TempData: this is the temporary storage that is use to display the data only once when our request complete the data will dispose automatically.
 2. ViewBag : move the data form the action(HomeController--> action(index)-->viewBag this view bag is only Useable by the index view of the HomeControlelr) to view and view to layout page,but there is conditoin that it will works inside the same controller.
              action -> view && view-> layout Page 
              --->> it works in the same action's view means action is index so works in index
@@ -31,4 +31,9 @@
         Scope: Object created on Request  and used when required . I give the key to my brother and then i will give the lockers key to my brother and then tell him to give me back after use.   
         transient: create new object on every request.e.g. if we have locker and we not allow the locker to open any one so we apply condition there we open the locker under our vision.(sir pe kharhy ho k) 
 15. in single request the loggedin User checked again and again.
-16. database ki service scoped use hoti ha Objet will dispose when the request get Back.                           
+16. database ki service scoped use hoti ha Objet will dispose when the request get Back.
+17. On server side when request will again send so how server know that who user is this? -->>> By maintaing the Id in the server-side and on client side we are showing this id also.
+18. when user Login then we end the cookie so that we will save in the inspect/storage/cokkie/value, so When user will user sends request to us then automatically we ae recieving this cookie on serverside.
+    -->>> if the request is from android so at this moment we will not store the data in the cookie we will store the data in the local storage of the phone(on cookie we only store the token in case of Mobile).
+
+     
