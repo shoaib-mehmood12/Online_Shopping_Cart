@@ -20,19 +20,47 @@ namespace Online_Shopping_Cart.Controllers
 
         //this is the interface this each interface is connect to a specific view so that each interface will give the view according to the connection of view inside itself
         //
-        public IActionResult Index(string k)
+        public IActionResult Index(string k, CategoryType? type)
         {
-            //this whole code inside the index interface is to search inisde the category.
-            var categoryQuery = _context.Categories.AsQueryable();//we add here asQueryable In a way to Apply the queries so through the query we will find the string that user gives us.
+            if (type == null)
+            {
+                type = CategoryType.Category;
+            }
+                ViewBag.Type = type;// we are also storing this type in the type view bags
+
+            var categoryQuery = _context.Categories.Where(m => m.Type == type);//we add here asQueryable In a way to Apply the queries so through the query we will find the string that user gives us.
             if (!string.IsNullOrWhiteSpace(k))//if the string is not null(k) name of the string is K that we are geting from the user from the index view
             {
-                categoryQuery = categoryQuery.Where(x => x.Name.StartsWith(k) || x.Description.Contains(k));
+                categoryQuery = categoryQuery.Where(x => x.Name.Contains(k));
             }
             //we are defining the viewbag that in this table search and giving it key to search in the given table.
-            ViewBag.SearchUrl = "/Category";// also add this corresponding in the admin layout
-            ViewBag.SearchKeyword = k;  
-            var data = categoryQuery.ToList();//the data we found above we added that data to list so we can 
-            return View(data); //displays the list of the data in the index vew that we have found above.
+            ViewBag.SearchUrl = "/Categories";// also add this corresponding in the admin layout
+                                              // ViewBag.SearchKeyword = k;  
+            var data = categoryQuery.Select(m => new CategoryViewModel { 
+                     BrandWiseProducts=m.BrandWiseProducts.Count(),
+                     CategoryWiseProducts=m.CategoryWiseProducts.Count(),
+                     Name=m.Name,
+                     Id=m.Id,
+                     Type=m.Type,
+                     LogoUrl=m.LogoUrl,
+                     Status=m.Status
+                  
+            }).ToList();//the data we found above we added that data to list so we can 
+
+            return View(data);
+
+
+            //this whole code inside the index interface is to search inisde the category.
+            // var categoryQuery = _context.Categories.Where(m=>m.Type==type);//we add here asQueryable In a way to Apply the queries so through the query we will find the string that user gives us.
+            // if (!string.IsNullOrWhiteSpace(k ))//if the string is not null(k) name of the string is K that we are geting from the user from the index view
+            // {
+            //     categoryQuery = categoryQuery.Where(x => x.Name.Contains(k));
+            // }
+            // //we are defining the viewbag that in this table search and giving it key to search in the given table.
+            // ViewBag.SearchUrl = "/Categories";// also add this corresponding in the admin layout
+            //// ViewBag.SearchKeyword = k;  
+            // var data = categoryQuery.ToList();//the data we found above we added that data to list so we can 
+            // return View(data); //displays the list of the data in the index vew that we have found above.
         }
         public IActionResult Create(bool iar)
         {

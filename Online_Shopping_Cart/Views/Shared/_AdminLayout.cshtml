@@ -1,5 +1,6 @@
-﻿@{
-    Layout = null;
+﻿@inject AppDbContext _db
+@{
+    string k = _db.httpcontextAccessor.HttpContext.Request.Query["k"].ToString();
 }
 
 <!DOCTYPE html>
@@ -22,6 +23,7 @@
     <!-- endinject -->
     <link rel="shortcut icon" href="images/favicon.png" />
     <link href="css/style.css" rel="stylesheet" />
+    <link href="~/css/common.css" rel="stylesheet" />
     <link href="~/themes/onetech-client/plugins/fontawesome-free-5.0.1/css/fontawesome-all.css" rel="stylesheet" />
   @*   <link href="~/source/repos/online_shopping_cart/online_shopping_cartviews/shared/notifypartial.cshtml" /> *@
     @* <link href="https://cdnjs.cloudflare.com/ajax/libs/notify/0.4.2/notify.js" />//cdn of the notify.js *@
@@ -210,9 +212,9 @@
                 </ul>
                 <ul class="navbar-nav navbar-nav-right">
                     <li class="nav-item nav-search d-none d-md-block mr-0">
-                        <form action="@ViewBag.SearchUrl">
+                        <form action="@ViewBag.SearchUrl"> @*inside categories and products controller's index action we have used the same name as ViewBag.SearchUrl  *@
                             <div class="input-group">
-                                <input type="search" value="@ViewBag.SearchKeyword" name="k" class="form-control" placeholder="Search..." aria-label="search" aria-describedby="search">
+                                <input type="search" value="@k" name="k" class="form-control" placeholder="Search..." aria-label="search" aria-describedby="search">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text" id="search">
                                         <i class="typcn typcn-zoom"></i>

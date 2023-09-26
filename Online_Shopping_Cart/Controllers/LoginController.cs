@@ -73,9 +73,8 @@ namespace Online_Shopping_Cart.Controllers
         public IActionResult Logout()  
 		{
 
-            // _context.LoginHistory.Where(m=>m.UserId==GlobalsConfig.LoginCookieName).ToList();
             _context.httpcontextAccessor.HttpContext.Response.Cookies.Delete(GlobalsConfig.LoginCookieName);
-			return RedirectToAction("Index", "Home");//index of HomeController
+			return RedirectToAction("Index", "Home");//move to the view of the index of HomeController
 			
 		}
 	}

@@ -38,6 +38,22 @@ namespace Online_Shopping_Cart.Models
         
         public CategoryType Type { get; set; }
     }
+
+    public class CategoryViewModel
+    {
+        public string Id { get; set; }     
+      
+        public string Name { get; set; }//name of the category-->>e.g samsung    
+
+        public bool Status { get; set; }//rank allot to the category
+        public string LogoUrl { get; set; }//this will use in the view where we will be add the logo of the product.
+        //one(category) have many(product)
+        public int  BrandWiseProducts { get; set; }//one category have more than on products 1(category)--many(products) thats why we added the list of the products in the category[e.g]--> samsung is a category and is have more than one product.
+        public int CategoryWiseProducts { get; set; }//one category have more than on products 1(category)--many(products) thats why we added the list of the products in the category[e.g]--> samsung is a category and is have more than one product.
+
+        public CategoryType Type { get; set; }
+    }
+
     public enum CategoryType{
         Category = 0,
         Brand = 10,

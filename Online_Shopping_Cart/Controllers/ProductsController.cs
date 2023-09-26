@@ -20,10 +20,11 @@ namespace Online_Shopping_Cart.Controllers
         {
             _context = context;
         }
-        public IActionResult Index()
+        public IActionResult Index(string categoryId) //the name of this parameter is same as we wrote in the view of the index
         {
             var product = _context.Products
-    .Select(m => new ProductViewModel
+               .Where(n=> string.IsNullOrEmpty(categoryId) ||n.CategoryId==categoryId)
+               .Select(m => new ProductViewModel
     {
         Brand = m.Brand.Name,
         Name = m.Name,
