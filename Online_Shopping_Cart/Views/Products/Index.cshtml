@@ -29,13 +29,7 @@
                     <thead>
                         <tr>
                             <th>
-                                @Html.DisplayNameFor(model => model.Slug)
-                            </th>
-                            <th>
                                 @Html.DisplayNameFor(model => model.Name)
-                            </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.Description)
                             </th>
                             <th>
                                 @Html.DisplayNameFor(model => model.Price)
@@ -53,7 +47,7 @@
                                 @Html.DisplayNameFor(model => model.Category)
                             </th>
                             <th>
-                                @Html.DisplayNameFor(model => model.ImageUrl)
+                               Image
                             </th>
                             <th></th>
                         </tr>
@@ -63,13 +57,7 @@
                         {
                             <tr>
                                 <td>
-                                    @Html.DisplayFor(modelItem => item.Slug)
-                                </td>
-                                <td>
                                     @Html.DisplayFor(modelItem => item.Name)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.Description)
                                 </td>
                                 <td>
                                     @Html.DisplayFor(modelItem => item.Price)
@@ -87,7 +75,7 @@
                                     @Html.DisplayFor(modelItem => item.Category)
                                 </td>
                                 <td>
-                                    <img src="/@item.ImageUrl" style="height: 63px;  width: 75px; border-radius:0px;"/>
+                                    <img src="/@item.ImageUrl" style="height: 63px;  width: 75px; border-radius:0px; padding-right:14px;"/>
                                 </td>
                                 <td>
                                     <a asp-action="Edit" asp-route-id="@item.Id" class="fa fa-edit "></a> |

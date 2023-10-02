@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Online_Shopping_Cart.Data;
 
@@ -11,9 +12,11 @@ using Online_Shopping_Cart.Data;
 namespace Online_Shopping_Cart.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230927131034_m0011")]
+    partial class m0011
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -203,14 +206,8 @@ namespace Online_Shopping_Cart.Migrations
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("ContactNumber")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<DateTime>("DbEntryTime")
                         .HasColumnType("datetime2");
-
-                    b.Property<string>("EmailAddress")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("LastModified")
                         .HasColumnType("datetime2");
@@ -352,13 +349,13 @@ namespace Online_Shopping_Cart.Migrations
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("UserId")
+                    b.Property<string>("userId")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("UserId")
+                    b.HasIndex("userId")
                         .IsUnique();
 
                     b.ToTable("Carts");
@@ -467,7 +464,7 @@ namespace Online_Shopping_Cart.Migrations
                 {
                     b.HasOne("Online_Shopping_Cart.Models.AppUser", "User")
                         .WithOne("ShoppingCart")
-                        .HasForeignKey("Online_Shopping_Cart.Models.ShoppingCart", "UserId")
+                        .HasForeignKey("Online_Shopping_Cart.Models.ShoppingCart", "userId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

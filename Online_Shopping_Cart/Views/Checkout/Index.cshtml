@@ -1,0 +1,108 @@
+﻿@model Order
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_ClientLayout.cshtml";
+}
+
+
+<div class="cart_section" id="checkout-app">
+    <form asp-action="Index">
+
+        <div class="container">
+            <div class="row">
+                <div class="col-md-7">
+                    <h1>Checkout</h1>
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-group">
+                        <label asp-for="ShippingAddress" class="control-label"></label>
+                        <input asp-for="ShippingAddress" class="form-control" />
+                        <span asp-validation-for="ShippingAddress" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="ContactNumber" class="control-label"></label>
+                        <input asp-for="ContactNumber" class="form-control" />
+                        <span asp-validation-for="ContactNumber" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="EmailAddress" class="control-label"></label>
+                        <input asp-for="EmailAddress" type="email" class="form-control" />
+                        <span asp-validation-for="EmailAddress" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="Confirm Order..." class="btn btn-primary" />
+
+                        <input onclick="window.location.href='/Cart'" value="Back to cart" class="btn btn-primary ml-2" />
+
+                    </div>
+
+                </div>
+                <div class="col-md-5">
+                    <h2>Items</h2>
+                    <template v-if="loaders.cart">
+                        <span class="fa fa-spin fa-spinner fa-2x "></span>
+                    </template>
+                    <template v-else>
+                        <table class="table table-stripped">
+                            <tr v-for="(cl,index) in cartList">
+                                <td>{{index+1}}</td>
+                                <td><img :src="`/${cl.imageUrl}`" style="width:50px" /></td>
+                                <td>{{cl.name}}</td>
+                                <td>{{cl.qty}}x {{cl.price}}</td>
+                                <td>{{(cl.qty * cl.price).toLocaleString()}}</td>
+
+
+                            </tr>
+                            <tr>
+                                <td colspan="3">Total Bill</td>
+                                <td>{{cartList.map(m=>m.price*m.qty).reduce((a,b)=>a+b,0)}}</td>
+
+                            </tr>
+                        </table>
+                    </template>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+@section js{
+    <script>
+        var checkoutApp = Vue.createApp({
+            data() {
+                return {
+                    //objects
+                    cartList: [], // i want to revieve the items that were added in cart
+                    loaders: {
+                        cart: true
+                    }
+                }
+            },
+            methods: {
+                loadCart: function () {
+                    this.loaders.cart = true;
+                    $.post('/cart/GetCartItems', function (res) {
+                        if (res.status) {
+                            checkoutApp.loaders.cart = false;
+                            //adding the result inside the cart list
+                            checkoutApp.cartList = res.data;// send the response of the products reference: inside the cartController we have aciton AddOrUpdatecart and inside this aciton we have the result stored in the data return
+
+                        }
+                    });
+                }
+            },
+
+            created() {
+                this.loadCart();
+                console.log('created')
+            },
+            updated() {
+                console.log('updated')
+            }
+
+        }).mount("#checkout-app");
+    </script>
+}
+@section css{
+    <link rel="stylesheet" type="text/css" href="styles/cart_styles.css">
+    <link rel="stylesheet" type="text/css" href="styles/cart_responsive.css">
+
+}

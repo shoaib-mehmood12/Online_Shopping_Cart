@@ -1,5 +1,5 @@
 1. TempData: this is the temporary storage that is use to display the data only once when our request complete the data will dispose automatically.
-2. ViewBag : move the data form the action(HomeController--> action(index)-->viewBag this view bag is only Useable by the index view of the HomeControlelr) to view and view to layout page,but there is conditoin that it will works inside the same controller.
+2. ViewBag : move the data form the action(Controller--> action(index)-->viewBag this view bag is only Useable by the index view of the HomeControlelr) to view and view to layout page,but there is conditoin that it will works inside the same controller.
              action -> view && view-> layout Page 
              --->> it works in the same action's view means action is index so works in index
              --->>it is the base class of the controller class
@@ -35,5 +35,5 @@
 17. On server side when request will again send so how server know that who user is this? -->>> By maintaing the Id in the server-side and on client side we are showing this id also.
 18. when user Login then we end the cookie so that we will save in the inspect/storage/cokkie/value, so When user will user sends request to us then automatically we ae recieving this cookie on serverside.
     -->>> if the request is from android so at this moment we will not store the data in the cookie we will store the data in the local storage of the phone(on cookie we only store the token in case of Mobile).
-
+19. select() always use when you are getting the model and in that model you want to add or remove the items .
      

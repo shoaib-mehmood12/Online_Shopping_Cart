@@ -24,8 +24,9 @@ namespace Online_Shopping_Cart.Controllers
 		public IActionResult ThemeOneTech()
 		{
 			return View();
-		}
-		public IActionResult ThemePullux()
+		}  
+
+		public IActionResult Order()
 		{
 			return View();
 		}//this is test comment

@@ -1,3 +1,6 @@
 ﻿table.action3 td:last-child{
           width:90px
 }
+[v-cloak]{
+    display:none;
+}

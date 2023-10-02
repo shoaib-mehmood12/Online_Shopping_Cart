@@ -27,6 +27,10 @@
 	<link rel="stylesheet" type="text/css" href="styles/main_styles.css">
 	<link rel="stylesheet" type="text/css" href="styles/responsive.css">
     <link href="styles/Custom.css" rel="stylesheet" />
+	@RenderSection("css",false)
+	<script src="~/lib/vue/dist/vue.global.prod.js"></script>
+
+	
 </head>
 
 <body>
@@ -45,7 +49,7 @@
 						<div class="col-12 d-flex flex-row">
 							<div class="top_bar_contact_item"><div class="top_bar_icon"><img src="images/phone.png" alt=""></div>+341-5941728</div>
 							<div class="top_bar_contact_item"><div class="top_bar_icon"><img src="images/mail.png" alt=""></div><a href="mailto:iamsmabbasi@gmail.com">shoaib</a></div>
-							<div class="top_bar_contact_item"><div class="top_bar_icon"></div>User: @userName</div>
+							<div class="top_bar_contact_item"><div class="top_bar_icon"></div></div>
 							<div class="top_bar_content ml-auto">
 								<div class="top_bar_menu">
 									<ul class="standard_dropdown top_bar_dropdown">
@@ -73,12 +77,12 @@
 									<div>
 										@if (! string.IsNullOrEmpty(userName))
 										{	
-												<a href="/Login/Logout"class=" font-weight-bolder">Logout</a>
+												<a href="/Login/Logout"class="text-danger font-weight-bolder">Logout</a>
 											
 										}
 										else
 										{
-											<p><a  href="/Login">Login</a></p>
+											<p><a class="font-weight-bold " href="/Login">Login</a></p>
 										}
 									</div>
 								</div>
@@ -145,10 +149,10 @@
 									<div class="cart_container d-flex flex-row align-items-center justify-content-end">
 										<div class="cart_icon">
 											<img src="images/cart.png" alt="">
-											<div class="cart_count"><span>10</span></div>
+											<div class="cart_count"><span></span></div>
 										</div>
 										<div class="cart_content">
-											<div class="cart_text"><a href="#">Cart</a></div>
+											<div class="cart_text"><a href="/Cart">Cart</a></div>
 											<div class="cart_price">$85</div>
 										</div>
 									</div>
@@ -210,7 +214,7 @@
 
 								<div class="main_nav_menu ml-auto">
 									<ul class="standard_dropdown main_nav_dropdown">
-										<li><a href="#">Home<i class="fas fa-chevron-down"></i></a></li>
+										<li><a href="/Home">Home<i class="fas fa-chevron-down"></i></a></li>
 										<li class="hassubs">
 											<a href="#">Super Deals<i class="fas fa-chevron-down"></i></a>
 											<ul>
@@ -509,7 +513,9 @@
 	<script src="plugins/OwlCarousel2-2.2.1/owl.carousel.js"></script>
 	<script src="plugins/slick-1.8.0/slick.js"></script>
 	<script src="plugins/easing/easing.js"></script>
-	<script src="js/custom.js"></script>
+    <script src="js/custom.js"></script>
+	@RenderSection("js",false)
+		@RenderSection("scripts",false)
 </body>
 
 </html>
