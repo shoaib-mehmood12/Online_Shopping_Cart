@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.EntityFrameworkCore;
 using Online_Shopping_Cart.Data;
 using Online_Shopping_Cart.Migrations;
@@ -12,6 +13,7 @@ namespace Online_Shopping_Cart.Controllers
 
         public CheckoutController(AppDbContext context)
         {
+			ModelState.AddModelError("", "Enter shopping details");
             _context = context;
         }
 
@@ -34,6 +36,7 @@ namespace Online_Shopping_Cart.Controllers
 			_context.RemoveRange(existingCart.CartItems);
 			_context.Remove(existingCart);
 			_context.SaveChanges();
+			TempData["checkout"] = "Order confirmed";
 			return RedirectToAction("Index", "Home");
 		}
 	}

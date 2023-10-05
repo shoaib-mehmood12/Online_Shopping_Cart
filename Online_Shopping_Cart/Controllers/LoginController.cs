@@ -47,9 +47,9 @@ namespace Online_Shopping_Cart.Controllers
                      IsEssential = true,// because we not want ot delete the cookie early when move from one view to another.
                      Expires = loginHistory.ValidTill,
                 });//sending the Token to user  
-                //we are storing the Id(primary key) in the session to identify the sesssion
-                //HttpContext.Session.SetString(GlobalsConfig.LoginSessionName,user.Id);//on the sesssion on the email of the user whose password matches     
-                
+                   //we are storing the Id(primary key) in the session to identify the sesssion
+                   //HttpContext.Session.SetString(GlobalsConfig.LoginSessionName,user.Id);//on the sesssion on the email of the user whose password matches     
+                TempData["Notification"] = "Logged in Successfully";
                 return RedirectToAction("Index", "Home");//index of HomeController 
             }
             ModelState.AddModelError("Password", "Invalid password");
@@ -74,6 +74,7 @@ namespace Online_Shopping_Cart.Controllers
 		{
 
             _context.httpcontextAccessor.HttpContext.Response.Cookies.Delete(GlobalsConfig.LoginCookieName);
+            TempData["logout"] = "Logout Successfully";
 			return RedirectToAction("Index", "Home");//move to the view of the index of HomeController
 			
 		}

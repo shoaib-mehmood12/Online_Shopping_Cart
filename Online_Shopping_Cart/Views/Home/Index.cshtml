@@ -11,7 +11,10 @@
 		categoryName = m.Category.Name,
 		brandName = m.Brand.Name
 	}).ToList();
-
+	string msg = TempData["Notification"]?.ToString();
+	string logout = TempData["logout"]?.ToString();
+	string checkout = TempData["checkout"]?.ToString();
+	string Register = TempData["register"]?.ToString();
 }
 <div id="cartApp" v-cloak>
 	<ul>
@@ -52,7 +55,68 @@
 	}
 </div>
 
+
+
+
 @section js{
+	@if (TempData["Notification"] != null)
+	{
+
+		<script>
+			Swal.fire({
+				position: 'center',
+				icon: 'success',
+				title: '@msg',
+				showConfirmButton: false,
+				timer: 1500
+			})
+		</script>
+
+	}
+	@if (TempData["logout"] != null)
+	{
+
+		<script>
+			Swal.fire({
+				position: 'center',
+				icon: 'success',
+				title: '@logout',
+				showConfirmButton: false,
+				timer: 1500
+			})
+		</script>
+
+	}
+	@if (TempData["checkout"] != null)
+	{
+
+		<script>
+			Swal.fire({
+				position: 'center',
+				icon: 'success',
+				title: '@checkout',
+				showConfirmButton: false,
+				timer: 1500
+			})
+		</script>
+
+	}
+	@if (Register != null)
+	{
+
+		<script>
+			Swal.fire({
+				position: 'center',
+				icon: 'success',
+				title: '@Register',
+				showConfirmButton: false,
+				timer: 1500
+			})
+		</script>
+
+	}
+
+
 	<script>
 		var cartApp = Vue.createApp({
 			data() {
@@ -71,14 +135,11 @@
 								if (res.status) {
 									//adding the result inside the cart list
 									cartApp.cartList = res.data;// send the response of the products reference: inside the cartController we have aciton AddOrUpdatecart and inside this aciton we have the result stored in the data return
-									
-
 								}
 							})
 						},
 					}
-				
-			
+
 		}).mount("#cartApp");
 	</script>
 }

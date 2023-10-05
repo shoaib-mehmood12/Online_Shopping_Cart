@@ -2,52 +2,57 @@
 
 @{
     ViewData["Title"] = "Create";
-    Layout = "~/Views/Shared/_ClientLayout.cshtml";
+    Layout = null;
 }
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <base href="/themes/signup/" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Registration  </title>
+    <link rel="stylesheet" href="style.css" asp-append-version="true">
+   @*  <link href="~/themes/Login/css/bootstrap.min.css" rel="stylesheet"> *@
+</head>
+<body>
+    <div class="wrapper">
+        <h2>Registration</h2>
+                <form asp-action="Create">
+        
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
+                    <div class="form-group input-box">
+                      
+                        <input asp-for="Name" class="form-control" placeholder="Name" />
+                        <span asp-validation-for="Name" class="text-danger"></span>
+                    </div>
+                    <div class="form-group input-box">
+                       
+                        <input asp-for="Email" class="form-control" placeholder="Email" />
+                        <span asp-validation-for="Email" class="text-danger"></span>
+                    </div>
 
-<div class="row mx-auto col-10 col-md-8 col-lg-6">
-  
-    <br />
-    <div class="col-md-4">
-        <form asp-action="Create">
-            <div>
-                <h1>Create</h1>
+                    <div class="form-group input-box">
+                        
+                        <input asp-for="Password" class="form-control" placeholder=" Confirm Password" />
+                        <span asp-validation-for="Password" class="text-danger"></span>
+                    </div>
+                    <div class="form-group input-box">
+                      
+                        <input asp-for="ConfirmPassword" class="form-control" placeholder="Confirm Password" />
+                        <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                    </div>
 
-                <h4>AppUser</h4>
+            <div class="form-group input-box button">
+                        <input type="submit" value="Create"  />
+                    </div>
+            <div class="text">
+                <h3>Already have an account? <a href="/Login">Login now</a></h3>
             </div>
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-
-            <div class="form-group">
-                <label asp-for="Name" class="control-label"></label>
-                <input asp-for="Name" class="form-control" />
-                <span asp-validation-for="Name" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Email" class="control-label"></label>
-                <input asp-for="Email" class="form-control" />
-                <span asp-validation-for="Email" class="text-danger"></span>
+                </form>
             </div>
 
-            <div class="form-group">
-                <label asp-for="Password" class="control-label"></label>
-                <input asp-for="Password" class="form-control" />
-                <span asp-validation-for="Password" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ConfirmPassword" class="control-label"></label>
-                <input asp-for="ConfirmPassword" class="form-control" />
-                <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
-            </div>
+</body>
+</html>
 
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
-    </div>
-</div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
 

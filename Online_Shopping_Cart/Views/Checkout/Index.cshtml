@@ -53,8 +53,8 @@
 
                             </tr>
                             <tr>
-                                <td colspan="3">Total Bill</td>
-                                <td>{{cartList.map(m=>m.price*m.qty).reduce((a,b)=>a+b,0)}}</td>
+                                <td colspan="3" ml-5 style="padding-left:50px">Total Bill</td>
+                                <td>{{(cartList.map(m=>m.price*m.qty).reduce((a,b)=>a+b,0)).toLocaleString()}}</td>
 
                             </tr>
                         </table>

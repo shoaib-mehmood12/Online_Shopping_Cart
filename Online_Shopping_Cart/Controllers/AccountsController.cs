@@ -64,7 +64,8 @@ namespace Online_Shopping_Cart.Controllers
                 appUser.EncryptedPassword = (appUser.Id + appUser.Password).Encrypt();
                 _context.Add(appUser);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                TempData["register"] = "Registered successfully";
+                return RedirectToAction("Index", "Home");
             }
             return View(appUser);
         }

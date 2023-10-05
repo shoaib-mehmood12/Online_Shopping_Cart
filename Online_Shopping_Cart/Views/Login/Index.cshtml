@@ -1,25 +1,72 @@
 ﻿@model LoginViewModel
 @{
     ViewData["Title"] = "Index";
-    Layout = "~/Views/Shared/_ClientLayout.cshtml";
+    // Layout = "~/Views/Shared/_ClientLayout.cshtml";
+
 }
 
-<form asp-action="index"><!--this is the login(index action with the parameters) this will give the values of the username and the password to the session for the use -->
-    <div class="form-group ">
-            <label class="col-md-3"></label>
-            <div col-md-7>
-                <input type="text" placeholder="Email" asp-for="Email"/> 
-                   <span asp-validation-for="Email"></span>
-            </div>
-    </div>
-    <div class="form-group ">
-        <label class="col-md-3"></label>
-        <div col-md-7>
-            <input type="text" placeholder="Password" asp-for="Password" />
-            <span asp-validation-for="Password"></span>
-        </div>
-    </div>
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+    
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <base href="~/themes/login/" />
+    <link href="css/bootstrap.min.css" rel="stylesheet">
 
-<input type="submit" value="Login" />
-</form>
+    
+    <title>Login</title>
+</head>
+<body>
+    <section class="form-01-main">
+        <div class="form-cover">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <form asp-action="index">
+                        <div class="form-sub-main">
+                            <div class="_main_head_as">
+                                    <img src="images/logo.png" width="150">
+                            </div>
+                             
+                            <div class="form-group">
+                                <input id="email"  class="form-control _ge_de_ol" type="text" placeholder="Enter Email" asp-for="Email">
+                                <span asp-validation-for="Email"></span>
+                            </div>
+
+                            <div class="form-group">
+                                <input id="password" type="password" class="form-control"  placeholder="********" asp-for="Password">
+                                <span asp-validation-for="Password"></span>
+                            </div>
+
+                            <div class="form-group">
+                              
+                                <div class="btn_uy">
+                                    <input id="btn"type="submit" value="Login" />
+                          
+                                </div>     
+                            </div>
+                       
+                        </div>
+                     </form>                       
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <script src="~/js/sweetalert.js"></script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
 
