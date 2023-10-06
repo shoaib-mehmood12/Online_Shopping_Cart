@@ -39,7 +39,8 @@ namespace Online_Shopping_Cart.Models
 	}
 
 
-	public class LoginViewModel {
+
+    public class LoginViewModel {
         [Required(ErrorMessage ="Email Invalid")]
         [EmailAddress]
         public string Email { get; set; }

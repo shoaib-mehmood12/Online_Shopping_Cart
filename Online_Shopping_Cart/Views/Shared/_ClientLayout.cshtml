@@ -1,9 +1,10 @@
 ﻿@using Microsoft.AspNetCore.Http
-
+@inject AppDbContext _db
 @inject IHttpContextAccessor ContextAccessor
 @{
 	//string userNames= ContextAccessor.HttpContext.Session.GetString(GlobalsConfig.LoginCookieName);
-	string userName = ContextAccessor.HttpContext.Request.Cookies[GlobalsConfig.LoginCookieName].toString();
+	string token = ContextAccessor.HttpContext.Request.Cookies[GlobalsConfig.LoginCookieName].toString();
+	var user = _db.GetLoggedInUser()?.Name;
 	//token = httpcontextAccessor.HttpContext.Request.Headers[GlobalsConfig.LoginCookieName].ToString();
 
 
@@ -49,8 +50,8 @@
 					<div class="row">
 						<div class="col-12 d-flex flex-row">
 							<div class="top_bar_contact_item"><div class="top_bar_icon"><img src="images/phone.png" alt=""></div>+341-5941728</div>
-							<div class="top_bar_contact_item"><div class="top_bar_icon"><img src="images/mail.png" alt=""></div><a href="mailto:iamsmabbasi@gmail.com">shoaib</a></div>
-							<div class="top_bar_contact_item"><div class="top_bar_icon"></div></div>
+							<div class="top_bar_contact_item"><div class="top_bar_icon"><img src="images/mail.png" alt=""></div><a href="mailto:iamsmabbasi@gmail.com">iamsmabbasi@gmail.com</a></div>
+							<div class="top_bar_contact_item"><div class="top_bar_icon" ></div>User:       @user</div>
 							<div class="top_bar_content ml-auto">
 								<div class="top_bar_menu">
 									<ul class="standard_dropdown top_bar_dropdown">
@@ -73,12 +74,12 @@
 									</ul>
 								</div>
 								<div class="top_bar_user">
-									<div class="user_icon"><img src="images/user.svg" alt=""></div>
-									<div><a href="/Accounts/Create">Register</a></div>
+									<div class="user_icon"><img src="images/userlogo.png" alt=""></div>
+									<div><p><a href="/Accounts/Create">Register</a></p></div>
 									<div>
-										@if (! string.IsNullOrEmpty(userName))
+										@if (! string.IsNullOrEmpty(token))
 										{	
-												<a href="/Login/Logout"class="text-danger font-weight-bolder">Logout</a>
+											<p><a href="/Login/Logout">Logout</a></p>
 											
 										}
 										else
@@ -141,17 +142,17 @@
 									<div class="wishlist_icon"><img src="images/heart.png" alt=""></div>
 									<div class="wishlist_content">
 										<div class="wishlist_text"><a href="#">Wishlist</a></div>
-										<div class="wishlist_count">115</div>
+										<div class="wishlist_count"></div>
 									</div>
 								</div>
 
 								<!-- Cart -->
 								<div class="cart">
-									<div id="cartIconApp" class="cart_container d-flex flex-row align-items-center justify-content-end">
-										{{5+3}}
+									<div id="cartApp2" class="cart_container d-flex flex-row align-items-center justify-content-end">
+										
 										<div class="cart_icon">
 											<img src="images/cart.png" alt="">
-											<div class="cart_count"><span>{{cartList.length}}</span></div>
+											<div class="cart_count"><span></span></div>
 										</div>
 										<div class="cart_content">
 											<div class="cart_text"><a href="/Cart">Cart</a></div>
@@ -184,8 +185,8 @@
 									</div>
 
 									<ul class="cat_menu">
-										<li><a href="#">Computers & Laptops <i class="fas fa-chevron-right ml-auto"></i></a></li>
-										<li><a href="#">Cameras & Photos<i class="fas fa-chevron-right"></i></a></li>
+										<li><a href="/Home">Computers & Laptops <i class="fas fa-chevron-right ml-auto"></i></a></li>
+										<li><a href="/Home">Cameras & Photos<i class="fas fa-chevron-right"></i></a></li>
 										<li class="hassubs">
 											<a href="#">Hardware<i class="fas fa-chevron-right"></i></a>
 											<ul>
@@ -516,6 +517,30 @@
 	<script src="plugins/slick-1.8.0/slick.js"></script>
 	<script src="plugins/easing/easing.js"></script>
     <script src="js/custom.js"></script>
+
+
+	<script>
+		var cartApp2 = Vue.createApp({
+			data() {
+				return {
+					cartList: []
+
+				},
+			}
+			methods: {
+				//inside the paramaters we are sending the id of the product that is added
+				addToCart: function (id) 
+					$.post('/cart/AddOrUpdateCart', { id: id }, function (res) {
+						if (res.status) {
+							//adding the result inside the cart list
+							cartApp2.cartList = res.data;// send the response of the products reference: inside the cartController we have aciton AddOrUpdatecart and inside this aciton we have the result stored in the data return
+						}
+					})
+				},
+			}
+
+		}).mount("#cartApp2");
+	</script>
 
 	@RenderSection("js",false)
 		@RenderSection("scripts",false)

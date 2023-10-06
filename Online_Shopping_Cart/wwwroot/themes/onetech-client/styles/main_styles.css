@@ -84,10 +84,11 @@ p
 }
 p a
 {
+	
 	display: inline;
 	position: relative;
 	color: inherit;
-	border-bottom: solid 1px #ffa07f;
+	border-bottom: solid 0px #ffa07f;
 	-webkit-transition: all 200ms ease;
 	-moz-transition: all 200ms ease;
 	-ms-transition: all 200ms ease;
@@ -106,10 +107,9 @@ p a:active
 	position: relative;
 	color: #FF6347;
 }
-p a:hover
-{
+p a:hover {
 	color: #FFFFFF;
-	background: #ffa07f;
+	background: #0e8ce4;
 }
 p a:hover::after
 {
@@ -297,11 +297,13 @@ section
 	font-weight: 300;
 	line-height: 56px;
 	margin-right: 40px;
+	color:blue;
 }
-.top_bar_contact_item:not(:first-child)
-{
-	margin-right: 0px;
-}
+	.top_bar_contact_item:not(:first-child) {
+		margin-right: 96px;
+		font-size: 20px;
+		text-shadow: 0px 0px 5px #007bff;
+	}
 .top_bar_contact_item a
 {
 	font-size: 16px;
@@ -443,10 +445,10 @@ section
 	transform: translateY(-2px);
 	width: 15px;
 }
-.user_icon img
-{
-	width: 100%;
-}
+	.user_icon img {
+		width: 184%;
+		margin-left: -4px;
+	}
 .top_bar_user div
 {
 	display: inline-block;
@@ -455,37 +457,36 @@ section
 {
 	margin-right: 21px;
 }
-.top_bar_user div:nth-child(2)::after
-{
-	display: block;
-	position: absolute;
-	top: 50%;
-	-webkit-transform: translateY(-50%);
-	-moz-transform: translateY(-50%);
-	-ms-transform: translateY(-50%);
-	-o-transform: translateY(-50%);
-	transform: translateY(-50%);
-	right: -13px;
-	width: 1px;
-	height: 17px;
-	background: rgba(0,0,0,0.1);
-	content: '';
-}
+	.top_bar_user div:nth-child(2)::after {
+		display: block;
+		position: absolute;
+		top: 39%;
+		-webkit-transform: translateY(-50%);
+		-moz-transform: translateY(-50%);
+		-ms-transform: translateY(-50%);
+		-o-transform: translateY(-50%);
+		transform: translateY(-50%);
+		right: -13px;
+		width: 1px;
+		height: 17px;
+		background-color: #007bff;
+		content: '';
+	}
 .top_bar_user a
 {
 	font-size: 16px;
-	font-weight: 300;
+	font-weight: 500;
 	line-height: 56px;
 	color: #000;
 	-webkit-transition: all 200ms ease;
 	-moz-transition: all 200ms ease;
-	-ms-transition: all 200ms ease;
+	-moz-transition: all 200ms ease;
 	-o-transition: all 200ms ease;
 	transition: all 200ms ease;
 }
 .top_bar_user a:hover
 {
-	color: #8a8a8a;
+	box-shadow:0px 0px 3px black;
 }
 
 /*********************************
