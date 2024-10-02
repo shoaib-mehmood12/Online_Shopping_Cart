@@ -9,7 +9,8 @@ using Online_Shopping_Cart.Models;
 namespace Online_Shopping_Cart.Data
 {
     public class AppDbContext : DbContext
-    {   public IHttpContextAccessor httpcontextAccessor { get; }
+    {  
+        public IHttpContextAccessor httpcontextAccessor { get; }
 
         //why private set because we want to set inside the calss means we are setting it in the below ProcessLogin method
         private  AppUserViewModel LoggedInUser { get;  set; } // we use this to store the user's data once. as we know that in single request the Logged in user is checked in multiple times so for each time the program will get the data from the database so for the same user go again and again is not a good practice so for this we use this object that will store the Logged in user util the session is on if session expires then the User also expires.  

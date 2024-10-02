@@ -299,7 +299,7 @@ section
 	margin-right: 40px;
 	color:blue;
 }
-	.top_bar_contact_item:not(:first-child) {
+	.top_bar_contact_item:first-child {
 		margin-right: 96px;
 		font-size: 20px;
 		text-shadow: 0px 0px 5px #007bff;

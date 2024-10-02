@@ -30,6 +30,9 @@
     <link href="styles/Custom.css" rel="stylesheet" />
 	<script src="~/js/sweetalert.js"></script>
 	@RenderSection("css",false)
+	<script src="https://code.jquery.com/jquery-3.7.1.js"
+			integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
+			crossorigin="anonymous"></script>
 	<script src="~/lib/vue/dist/vue.global.prod.js"></script>
 
 	
@@ -49,9 +52,9 @@
 				<div class="container">
 					<div class="row">
 						<div class="col-12 d-flex flex-row">
-							<div class="top_bar_contact_item"><div class="top_bar_icon"><img src="images/phone.png" alt=""></div>+341-5941728</div>
-							<div class="top_bar_contact_item"><div class="top_bar_icon"><img src="images/mail.png" alt=""></div><a href="mailto:iamsmabbasi@gmail.com">iamsmabbasi@gmail.com</a></div>
 							<div class="top_bar_contact_item"><div class="top_bar_icon" ></div>User:       @user</div>
+							<div class="top_bar_contact_item"><div class="top_bar_icon"><img src="images/mail.png" alt=""></div><a href="mailto:iamsmabbasi@gmail.com">iamsmabbasi@gmail.com</a></div>
+							<div class="top_bar_contact_item"><div class="top_bar_icon"><img src="images/phone.png" alt=""></div>+341-5941728</div>
 							<div class="top_bar_content ml-auto">
 								<div class="top_bar_menu">
 									<ul class="standard_dropdown top_bar_dropdown">
@@ -148,11 +151,11 @@
 
 								<!-- Cart -->
 								<div class="cart">
-									<div id="cartApp2" class="cart_container d-flex flex-row align-items-center justify-content-end">
+									<div  class="cart_container d-flex flex-row align-items-center justify-content-end">
 										
 										<div class="cart_icon">
 											<img src="images/cart.png" alt="">
-											<div class="cart_count"><span></span></div>
+											<div id="cartIconApp" class="cart_count"><span>{{ cartListLength  }}</span></div>
 										</div>
 										<div class="cart_content">
 											<div class="cart_text"><a href="/Cart">Cart</a></div>
@@ -519,28 +522,55 @@
     <script src="js/custom.js"></script>
 
 
-	<script>
+	@* <script>
 		var cartApp2 = Vue.createApp({
 			data() {
 				return {
 					cartList: []
 
-				},
-			}
+				};
+			},
 			methods: {
 				//inside the paramaters we are sending the id of the product that is added
-				addToCart: function (id) 
+				addToCart: function (id) { 
 					$.post('/cart/AddOrUpdateCart', { id: id }, function (res) {
 						if (res.status) {
 							//adding the result inside the cart list
 							cartApp2.cartList = res.data;// send the response of the products reference: inside the cartController we have aciton AddOrUpdatecart and inside this aciton we have the result stored in the data return
 						}
 					})
-				},
+				}
 			}
 
 		}).mount("#cartApp2");
-	</script>
+	</script> *@
+
+@* 	<script>
+		const cartApp2 = Vue.createApp({
+			data() {
+				return {
+					cartList: []
+				};
+			},
+			methods: {
+				addToCart(id) {
+					debugger;
+					$.post('/cart/AddOrUpdateCart', { id: id }, (res) => {
+					
+						console.log('Response:', res);
+						if (res.status) {
+							cartApp2.cartList = res.data;
+						}
+					}).fail((error) => {
+						console.error('AJAX request failed:', error);
+					});
+				}
+			}
+		}).mount("#cartApp2");
+	</script> *@
+
+
+
 
 	@RenderSection("js",false)
 		@RenderSection("scripts",false)

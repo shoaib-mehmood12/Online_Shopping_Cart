@@ -87,7 +87,8 @@
                 return {
                     //objects
                     cartList: [], // revieve the items that were added in cartApp.cartList
-                }
+                    cartListLength: 0
+                };
             }
         }).mount("#cartIconApp");
         var cartApp = Vue.createApp({
@@ -97,7 +98,8 @@
                     cartList: [], // i want to revieve the items that were added in cart
                     loaders: {
                         cart: true
-                    }
+                    },
+                    cartListLength: 0
                 }
             },
             methods: {
@@ -107,6 +109,7 @@
                         window.location.assign('/login');
                     }
                     $.post('/cart/AddOrUpdateCart', { id: id }, function (res) {
+                        debugger;
                         if (res.status) {
                             //adding the result inside the cart list
                             cartApp.cartList = res.data;// send the response of the products reference: inside the cartController we have aciton AddOrUpdatecart and inside this aciton we have the result stored in the data return
@@ -118,13 +121,14 @@
                     this.loaders.cart = true;
                     $.post('/cart/GetCartItems', function (res) {
                         if (res.status) {
+                            debugger;
                             cartApp.loaders.cart = false;
                             res.data.forEach(m => m.loader = false);
                             res.data.forEach(m => m.editMode = false);
                             res.data.forEach(m => m.deleteMode = false);
                             //adding the result inside the cart list
                             cartApp.cartList = res.data;// send the response of the products reference: inside the cartController we have aciton AddOrUpdatecart and inside this aciton we have the result stored in the data return
-
+                            this.cartListLength = this.cartList.length;
                         }
                     });
 
